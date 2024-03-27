@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "719830039728",
+    "project_id": "fyp-fb-fbdb4",
+    "storage_bucket": "fyp-fb-fbdb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719830039728:android:64e1a92bb13346b1c00f75",
+        "android_client_info": {
+          "package_name": "com.example.salonbookingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiFRxlL5Nnq-Kl6FFvknTXe3w3P4UI7ys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
