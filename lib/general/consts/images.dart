@@ -8,5 +8,5 @@ class AppAssets {
       imgLogin = "assets/images/img_login.png",
       imgSignup = "assets/images/img_login.png",
       imgDoctor = "assets/images/doctor.png",
-      imgWelcome = "assets/images/img_welcome.png";
+      imgWelcome = "assets/images/img_login.png";
 }
