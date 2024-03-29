@@ -1,7 +1,7 @@
 import 'package:salonbookingapp/general/consts/consts.dart';
 import 'package:salonbookingapp/general/list/home_icon_list.dart';
 
-import '../../Utils/app_style.dart';
+import '../../../Utils/app_style.dart';
 import '../../category_details/view/category_details.dart';
 
 class CategoryScreenn extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Utils/app_style.dart';
-import '../category/view/category_view.dart';
+import '../admin_dashboard/category/view/category_view.dart';
 import 'image_slider.dart';
 
 class FirstScreen extends StatelessWidget {

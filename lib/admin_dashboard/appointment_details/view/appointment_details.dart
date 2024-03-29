@@ -1,6 +1,6 @@
 import 'package:salonbookingapp/general/consts/consts.dart';
 
-import '../../Utils/app_style.dart';
+import '../../../Utils/app_style.dart';
 
 class Appointmentdetails extends StatelessWidget {
   final DocumentSnapshot doc;

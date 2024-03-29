@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:salonbookingapp/admin_dashboard/widgets/loading_dialog.dart';
+import 'package:salonbookingapp/admin_dashboard/widgets/progress_bar.dart';
 
 import '../Utils/app_style.dart';
-import '../widgets/loading_dialog.dart';
-import '../widgets/progress_bar.dart';
 
 class DoctorProfileSetupScreen extends StatefulWidget {
   const DoctorProfileSetupScreen({Key? key}) : super(key: key);

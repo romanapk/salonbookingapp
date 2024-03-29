@@ -1,7 +1,7 @@
 import 'package:salonbookingapp/doctors_dashboard/auth/view/login_page.dart';
 
 import '../../../Utils/app_style.dart';
-import '../../../appointment_details/view/appointment_details.dart';
+import '../../../admin_dashboard/appointment_details/view/appointment_details.dart';
 import '../../../general/consts/consts.dart';
 import '../controller/total_appointment.dart';
 

@@ -1,6 +1,6 @@
 import 'package:salonbookingapp/general/consts/consts.dart';
 
-import '../../Utils/app_style.dart';
+import '../../../Utils/app_style.dart';
 import '../../doctor_profile/view/doctor_view.dart';
 import '../../search/controller/search_controller.dart';
 import '../../search/view/search_view.dart';

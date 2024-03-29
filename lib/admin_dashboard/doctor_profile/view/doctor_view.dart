@@ -1,6 +1,6 @@
 import 'package:salonbookingapp/general/consts/consts.dart';
 
-import '../../Utils/app_style.dart';
+import '../../../Utils/app_style.dart';
 import '../../book_appointment/view/appointment_view.dart';
 import '../../widgets/coustom_button.dart';
 

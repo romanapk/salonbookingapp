@@ -1,5 +1,5 @@
+import '../../../Utils/app_style.dart';
 import '../../../general/consts/consts.dart';
-import '../../Utils/app_style.dart';
 import '../../appointment_details/view/appointment_details.dart';
 import '../controller/total_appointment.dart';
 

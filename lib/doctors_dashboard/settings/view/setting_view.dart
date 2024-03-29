@@ -1,5 +1,5 @@
-import '../../../auth/controller/signup_controller.dart';
-import '../../../auth/view/login_page.dart';
+import '../../../admin_dashboard/auth/controller/signup_controller.dart';
+import '../../../admin_dashboard/auth/view/login_page.dart';
 import '../../../general/consts/consts.dart';
 import '../../widgets/coustom_iconbutton.dart';
 import '../controller/profile_controller.dart';

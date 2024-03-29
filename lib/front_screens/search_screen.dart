@@ -1,12 +1,12 @@
 import '../../../general/list/home_icon_list.dart';
-import '../../category_details/view/category_details.dart';
-import '../../doctor_profile/view/doctor_view.dart';
-import '../../search/controller/search_controller.dart';
-import '../../search/view/search_view.dart';
-import '../../widgets/coustom_textfield.dart';
 import '../Utils/app_style.dart';
+import '../admin_dashboard/category_details/view/category_details.dart';
+import '../admin_dashboard/doctor_profile/view/doctor_view.dart';
+import '../admin_dashboard/home/controller/home_controller.dart';
+import '../admin_dashboard/search/controller/search_controller.dart';
+import '../admin_dashboard/search/view/search_view.dart';
+import '../admin_dashboard/widgets/coustom_textfield.dart';
 import '../general/consts/consts.dart';
-import '../home/controller/home_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

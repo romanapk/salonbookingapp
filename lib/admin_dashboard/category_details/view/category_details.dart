@@ -1,5 +1,5 @@
+import '../../../Utils/app_style.dart';
 import '../../../general/consts/consts.dart';
-import '../../Utils/app_style.dart';
 import '../../doctor_profile/view/doctor_view.dart';
 
 class CategoryDetailsView extends StatelessWidget {

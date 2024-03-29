@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:salonbookingapp/auth/view/login_page.dart';
 import 'package:salonbookingapp/doctors_dashboard/auth/view/login_page.dart';
 
 import '../doctors_dashboard/bottombar_screen.dart';
 import '../front_screens/app_shell.dart';
+import 'admin_dashboard/auth/view/login_page.dart';
 
 class RegisterSelectionPage extends StatefulWidget {
   @override
