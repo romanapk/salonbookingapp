@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
-        title: Text(""),
+        title: Text("hellooo "),
       ),
       body: container,
       drawer: Drawer(

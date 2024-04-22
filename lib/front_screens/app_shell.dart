@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:salonbookingapp/Utils/app_style.dart';
-import 'package:salonbookingapp/front_screens/about_screen.dart';
 import 'package:salonbookingapp/front_screens/first_screen.dart';
+import 'package:salonbookingapp/front_screens/fourth%20one/new_profile_screen.dart';
 import 'package:salonbookingapp/front_screens/search_screen.dart';
 import 'package:salonbookingapp/front_screens/third_screen.dart';
 
@@ -19,7 +19,7 @@ class _AppShellState extends State<AppShell> {
     const FirstScreen(),
     const HomeScreen(),
     const TotalAppointment(),
-    HomePage(),
+    UserProfileScreen(),
   ];
 
   @override
@@ -70,7 +70,7 @@ class _AppShellState extends State<AppShell> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
-            label: 'About',
+            label: 'Profile',
           ),
         ],
       ),
