@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salonbookingapp/front_screens/fourth%20one/new_profile_screen.dart';
 import 'package:salonbookingapp/front_screens/fourth%20one/rate_my_app.dart';
 
 import '../Utils/app_style.dart';
@@ -36,7 +37,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Styles.bgColor,
         title: Text("hellooo "),
       ),
-      body: container,
+      body: Container(
+        child: UserProfileScreen(),
+      ),
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Container(
