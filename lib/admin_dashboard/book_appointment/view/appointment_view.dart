@@ -8,11 +8,13 @@ class BookAppointmentView extends StatelessWidget {
   final String docId;
   final String docNum;
   final String docName;
+  final DocumentSnapshot doc;
   const BookAppointmentView({
     super.key,
     required this.docId,
     required this.docName,
     required this.docNum,
+    required this.doc,
   });
 
   @override
@@ -72,17 +74,28 @@ class BookAppointmentView extends StatelessWidget {
                   icon: const Icon(Icons.call),
                 ),
                 10.heightBox,
-                "Your Address".text.size(AppFontSize.size16).semiBold.make(),
-                TextFormField(
-                  controller: controller.appMessageController,
-                  maxLines: 3,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.note_add),
-                    hintText: "write your address",
-                    hintStyle: TextStyle(),
-                    border: OutlineInputBorder(borderSide: BorderSide()),
-                  ),
-                )
+                Column(
+                  children: [
+                    if (doc['stylistService'] == 'Yes')
+                      "Your Address"
+                          .text
+                          .size(AppFontSize.size16)
+                          .semiBold
+                          .make(),
+                    if (doc['stylistService'] == 'Yes')
+                      TextFormField(
+                        controller: controller.appMessageController,
+                        maxLines: 3,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.note_add),
+                          hintText: "write your address",
+                          hintStyle: TextStyle(),
+                          border: OutlineInputBorder(borderSide: BorderSide()),
+                        ),
+                        validator: controller.validdata,
+                      ),
+                  ],
+                ),
               ],
             ),
           ),

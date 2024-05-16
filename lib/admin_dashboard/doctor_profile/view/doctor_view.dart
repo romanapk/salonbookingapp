@@ -1,12 +1,11 @@
-import 'package:salonbookingapp/general/consts/consts.dart';
-
 import '../../../Utils/app_style.dart';
+import '../../../doctors_dashboard/widgets/coustom_button.dart';
+import '../../../general/consts/consts.dart';
 import '../../book_appointment/view/appointment_view.dart';
-import '../../widgets/coustom_button.dart';
 
 class DoctorProfile extends StatelessWidget {
   final DocumentSnapshot doc;
-  const DoctorProfile({super.key, required this.doc});
+  const DoctorProfile({Key? key, required this.doc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -104,13 +103,21 @@ class DoctorProfile extends StatelessWidget {
                         .size(AppFontSize.size14)
                         .make(),
                     10.heightBox,
-                    "Services".text.semiBold.size(AppFontSize.size18).make(),
-                    5.heightBox,
-                    doc['stylistService']
-                        .toString()
-                        .text
-                        .size(AppFontSize.size14)
-                        .make(),
+                    Column(
+                      children: [
+                        "Is available For Home Services:"
+                            .text
+                            .semiBold
+                            .size(AppFontSize.size18)
+                            .make(),
+                        5.heightBox,
+                        if (doc['stylistService'] == 'Yes')
+                          "Yes".text.size(AppFontSize.size14).make()
+                        else if (doc['stylistService'] == 'No')
+                          "No".text.size(AppFontSize.size14).make(),
+                        15.heightBox,
+                      ],
+                    ),
                     15.heightBox,
                     ListTile(
                       title: "Contact Details"
@@ -133,16 +140,18 @@ class DoctorProfile extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(10),
         child: CoustomButton(
-            onTap: () {
-              Get.to(
-                () => BookAppointmentView(
-                  docId: doc['stylistId'],
-                  docName: doc['stylistName'],
-                  docNum: doc['stylistPhone'],
-                ),
-              );
-            },
-            title: "Book an Appointment"),
+          onTap: () {
+            Get.to(
+              () => BookAppointmentView(
+                docId: doc['stylistId'],
+                docName: doc['stylistName'],
+                docNum: doc['stylistPhone'],
+                doc: doc,
+              ),
+            );
+          },
+          title: "Book an Appointment",
+        ),
       ),
     );
   }
