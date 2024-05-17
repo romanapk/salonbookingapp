@@ -1,7 +1,7 @@
 import '../../../general/consts/consts.dart';
 import '../Utils/app_style.dart';
-import '../admin_dashboard/appointment_details/view/appointment_details.dart';
-import '../admin_dashboard/total_appintment/controller/total_appointment.dart';
+import '../doctors_dashboard/appointment_details/view/appointment_details.dart';
+import '../doctors_dashboard/total_appintment/controller/total_appointment.dart';
 
 class TotalAppointment extends StatelessWidget {
   const TotalAppointment({super.key});

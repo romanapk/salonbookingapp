@@ -1,6 +1,6 @@
+import '../../../front_screens/third_screen.dart';
 import '../../../general/consts/consts.dart';
 import '../../settings/view/setting_view.dart';
-import '../../total_appintment/view/total_appointment_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
