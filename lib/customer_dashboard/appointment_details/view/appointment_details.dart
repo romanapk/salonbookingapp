@@ -4,6 +4,7 @@ import '../../../Utils/app_style.dart';
 
 class Appointmentdetails extends StatelessWidget {
   final DocumentSnapshot doc;
+
   const Appointmentdetails({super.key, required this.doc});
 
   @override

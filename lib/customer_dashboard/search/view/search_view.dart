@@ -16,7 +16,7 @@ class SearchView extends StatelessWidget {
         elevation: 0,
       ),
       body: FutureBuilder<QuerySnapshot>(
-        future: FirebaseFirestore.instance.collection('Stylist').get(),
+        future: FirebaseFirestore.instance.collection('stylists').get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             return const Center(

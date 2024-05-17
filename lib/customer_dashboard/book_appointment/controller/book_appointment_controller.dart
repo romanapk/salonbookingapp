@@ -24,11 +24,13 @@ class AppointmentController extends GetxController {
           'appWith': docId,
           'appStylistName': docName,
           'appStylistNum': docNum,
+          'isConfirmed': false, // Add the isConfirmed field here
         });
         isLoading(false);
-        VxToast.show(context, msg: "Appointment is booked sucessfully");
+        VxToast.show(context, msg: "Appointment is booked successfully");
         Get.back();
       } catch (e) {
+        isLoading(false); // Ensure loading state is reset in case of error
         VxToast.show(context, msg: "$e");
       }
     }

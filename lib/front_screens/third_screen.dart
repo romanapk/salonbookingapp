@@ -1,7 +1,7 @@
 import '../../../general/consts/consts.dart';
 import '../Utils/app_style.dart';
-import '../stylist_dashboard/appointment_details/view/appointment_details.dart';
-import '../stylist_dashboard/total_appintment/controller/total_appointment.dart';
+import '../customer_dashboard/appointment_details/view/appointment_details.dart';
+import '../customer_dashboard/total_appintment/controller/total_appointment.dart';
 
 class TotalAppointment extends StatelessWidget {
   const TotalAppointment({super.key});
@@ -9,6 +9,7 @@ class TotalAppointment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put((TotalAppointmentcontroller()));
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
@@ -19,11 +20,13 @@ class TotalAppointment extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
             // While data is being fetched, display a CircularProgressIndicator.
+
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
             var data = snapshot.data?.docs;
+
             return Padding(
               padding: const EdgeInsets.all(10),
               child: ListView.builder(

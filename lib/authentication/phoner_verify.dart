@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Utils/app_style.dart';
-import '../admin_dashboard/bottombar_screen.dart';
+import 'package:flutter/material.dart';
 
+import '../Utils/app_style.dart';
+import '../customer_dashboard/bottombar_screen.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   const PhoneAuthScreen({super.key});
@@ -33,8 +33,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
           this.verificationId = verificationId!;
         });
       },
-      codeAutoRetrievalTimeout: (String verificationId) {
-      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
 
@@ -63,7 +62,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             Padding(
               padding: const EdgeInsets.all(40.10),
               child: TextField(
@@ -71,7 +72,6 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                 decoration: InputDecoration(
                   iconColor: Styles.bgColor,
                   border: OutlineInputBorder(
-
                     borderRadius: BorderRadius.circular(9),
                   ),
                   // focusedBorder: OutlineInputBorder(
@@ -80,7 +80,8 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                   //
                   // ),
                   labelText: 'Enter Phone Number',
-                  prefixIcon: const Icon(Icons.phone,
+                  prefixIcon: const Icon(
+                    Icons.phone,
                   ),
                   filled: true,
                   fillColor: Styles.textColor,

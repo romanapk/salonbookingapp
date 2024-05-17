@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:salonbookingapp/general/consts/colors.dart';
 
+import '../../../front_screens/third_screen.dart';
 import '../../category/view/category_view.dart';
 import '../../settings/view/setting_view.dart';
-import '../../total_appintment/view/total_appointment_view.dart';
 import 'home_screen.dart';
 
 class Home extends StatefulWidget {
