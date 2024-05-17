@@ -1,4 +1,3 @@
-import '../../../Utils/app_style.dart';
 import '../../../general/consts/consts.dart';
 import '../../appointment_details/view/appointment_details.dart';
 import '../controller/total_appointment.dart';
@@ -11,7 +10,7 @@ class TotalAppointment extends StatelessWidget {
     var controller = Get.put((TotalAppointmentcontroller()));
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Styles.bgColor,
+        backgroundColor: AppColors.primeryColor,
         title: "All Appointmnets".text.make(),
       ),
       body: FutureBuilder<QuerySnapshot>(

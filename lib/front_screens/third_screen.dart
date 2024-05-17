@@ -12,7 +12,7 @@ class TotalAppointment extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
-        title: "All Appointmnets".text.make(),
+        title: "All Appointments".text.make(),
       ),
       body: FutureBuilder<QuerySnapshot>(
         future: controller.getAppointments(),

@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
+import 'package:salonbookingapp/general/consts/consts.dart';
 
 class TotalAppointmentcontroller extends GetxController {
   var docName = ''.obs;

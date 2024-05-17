@@ -1,8 +1,6 @@
-import 'package:salonbookingapp/doctors_dashboard/auth/view/login_page.dart';
-
-import '../../../Utils/app_style.dart';
 import '../../../admin_dashboard/appointment_details/view/appointment_details.dart';
 import '../../../general/consts/consts.dart';
+import '../../auth/view/login_page.dart';
 import '../controller/total_appointment.dart';
 
 class TotalAppointment extends StatelessWidget {
@@ -17,7 +15,7 @@ class TotalAppointment extends StatelessWidget {
         Get.offAll(() => const LoginVieww());
       }),
       appBar: AppBar(
-        backgroundColor: Styles.bgColor,
+        backgroundColor: AppColors.primeryColor,
         title: "All Appointmnets".text.make(),
       ),
       body: FutureBuilder<QuerySnapshot>(
