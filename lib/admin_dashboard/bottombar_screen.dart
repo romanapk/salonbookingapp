@@ -2,8 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/app_style.dart';
-import '../doctors_dashboard/profile_setup.dart';
 import '../scheduling_page/scheduling_page.dart';
+import '../stylist_dashboard/profile_setup.dart';
 import 'home_page.dart';
 
 class AdminHomeScreen extends StatefulWidget {

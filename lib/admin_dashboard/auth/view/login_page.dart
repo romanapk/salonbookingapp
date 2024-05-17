@@ -1,6 +1,6 @@
 import 'package:salonbookingapp/front_screens/app_shell.dart';
 
-import '../../../doctors_dashboard/general/consts/consts.dart';
+import '../../../stylist_dashboard/general/consts/consts.dart';
 import '../../widgets/coustom_textfield.dart';
 import '../../widgets/loading_indicator.dart';
 import '../controller/login_controller.dart';

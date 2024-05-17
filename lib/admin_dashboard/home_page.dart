@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salonbookingapp/doctors_dashboard/home/view/home.dart';
+import 'package:salonbookingapp/stylist_dashboard/home/view/home.dart';
 
 import '../Utils/app_style.dart';
 import 'image_slider.dart';

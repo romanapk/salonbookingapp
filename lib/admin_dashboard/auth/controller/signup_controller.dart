@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import '../../../doctors_dashboard/general/consts/consts.dart';
+import '../../../stylist_dashboard/general/consts/consts.dart';
 
 class SignupController extends GetxController {
   var nameController = TextEditingController();

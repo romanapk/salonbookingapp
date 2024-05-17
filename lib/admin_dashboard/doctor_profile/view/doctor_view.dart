@@ -1,6 +1,6 @@
 import '../../../Utils/app_style.dart';
-import '../../../doctors_dashboard/widgets/coustom_button.dart';
 import '../../../general/consts/consts.dart';
+import '../../../stylist_dashboard/widgets/coustom_button.dart';
 import '../../book_appointment/view/appointment_view.dart';
 
 class DoctorProfile extends StatelessWidget {

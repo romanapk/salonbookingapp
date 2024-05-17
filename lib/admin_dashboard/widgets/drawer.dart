@@ -2,7 +2,7 @@
 // import 'package:salonbookingapp/widgets/update_profile.dart';
 //
 // import '../authentication/auth_screen.dart';
-// import '../doctors_dashboard/bottombar_screen.dart';
+// import '../stylist_dashboard/bottombar_screen.dart';
 // import '../global/global.dart';
 // import '../scheduling_page/screen_dashboard.dart';
 //

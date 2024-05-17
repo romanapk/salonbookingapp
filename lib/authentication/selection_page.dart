@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:salon/authentication/register.dart';
-// import '../doctors_dashboard/bottombar_screen.dart';
+// import '../stylist_dashboard/bottombar_screen.dart';
 // import '../front_screens/app_shell.dart';
 //
 // class RegisterSelectionPage extends StatefulWidget {
