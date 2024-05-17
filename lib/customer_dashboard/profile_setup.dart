@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salonbookingapp/admin_dashboard/widgets/loading_dialog.dart';
-import 'package:salonbookingapp/admin_dashboard/widgets/progress_bar.dart';
+import 'package:salonbookingapp/customer_dashboard/widgets/loading_dialog.dart';
+import 'package:salonbookingapp/customer_dashboard/widgets/progress_bar.dart';
 
 import '../Utils/app_style.dart';
 

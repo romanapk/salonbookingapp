@@ -1,4 +1,4 @@
-import 'package:salonbookingapp/admin_dashboard/bottombar_screen.dart';
+import 'package:salonbookingapp/customer_dashboard/bottombar_screen.dart';
 
 import '../../general/consts/consts.dart';
 import '../../widgets/coustom_textfield.dart';

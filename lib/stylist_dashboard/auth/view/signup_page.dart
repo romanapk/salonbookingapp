@@ -1,4 +1,4 @@
-import '../../../admin_dashboard/bottombar_screen.dart';
+import '../../../customer_dashboard/bottombar_screen.dart';
 import '../../general/consts/consts.dart';
 import '../../widgets/coustom_textfield.dart';
 import '../controller/signup_controller.dart';

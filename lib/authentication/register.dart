@@ -10,8 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Utils/app_style.dart';
-import '../admin_dashboard/widgets/error_dialog.dart';
-import '../admin_dashboard/widgets/loading_dialog.dart';
+import '../customer_dashboard/widgets/error_dialog.dart';
+import '../customer_dashboard/widgets/loading_dialog.dart';
 import '../front_screens/app_shell.dart';
 import '../global/global.dart';
 import 'my_button.dart';

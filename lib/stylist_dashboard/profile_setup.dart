@@ -8,9 +8,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../admin_dashboard/widgets/loading_dialog.dart';
-import '../admin_dashboard/widgets/progress_bar.dart';
 import '../colors/app_colors.dart';
+import '../customer_dashboard/widgets/loading_dialog.dart';
+import '../customer_dashboard/widgets/progress_bar.dart';
 
 class DoctorProfileSetupScreen extends StatefulWidget {
   const DoctorProfileSetupScreen({Key? key}) : super(key: key);

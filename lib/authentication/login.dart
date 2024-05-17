@@ -4,7 +4,7 @@ import 'package:salonbookingapp/authentication/phoner_verify.dart';
 import 'package:salonbookingapp/authentication/register.dart';
 
 import '../Utils/app_style.dart';
-import '../admin_dashboard/bottombar_screen.dart';
+import '../customer_dashboard/bottombar_screen.dart';
 import '../front_screens/app_shell.dart';
 import 'auth_services.dart';
 import 'my_button.dart';

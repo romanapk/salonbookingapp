@@ -1,4 +1,4 @@
-// import '../../../admin_dashboard/appointment_details/view/appointment_details.dart';
+// import '../../../customer_dashboard/appointment_details/view/appointment_details.dart';
 // import '../../../general/consts/consts.dart';
 // import '../../auth/view/login_page.dart';
 // import '../controller/total_appointment.dart';

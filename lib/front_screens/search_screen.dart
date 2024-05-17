@@ -1,11 +1,11 @@
 import '../../../general/list/home_icon_list.dart';
 import '../Utils/app_style.dart';
-import '../admin_dashboard/category_details/view/category_details.dart';
-import '../admin_dashboard/doctor_profile/view/doctor_view.dart';
-import '../admin_dashboard/home/controller/home_controller.dart';
-import '../admin_dashboard/search/controller/search_controller.dart';
-import '../admin_dashboard/search/view/search_view.dart';
-import '../admin_dashboard/widgets/coustom_textfield.dart';
+import '../customer_dashboard/category_details/view/category_details.dart';
+import '../customer_dashboard/doctor_profile/view/doctor_view.dart';
+import '../customer_dashboard/home/controller/home_controller.dart';
+import '../customer_dashboard/search/controller/search_controller.dart';
+import '../customer_dashboard/search/view/search_view.dart';
+import '../customer_dashboard/widgets/coustom_textfield.dart';
 import '../general/consts/consts.dart';
 
 class HomeScreen extends StatelessWidget {
