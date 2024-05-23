@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   List screenList = [
     const HomeScreen(),
     const CategoryScreenn(),
-    const TotalAppointment(),
+    const CustomerTotalAppointment(),
     const SettingsView(),
   ];
   @override

@@ -43,7 +43,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
 
   get: ^4.6.6
-  velocity_x: ^4.1.2
+  velocity_x: ^4.2.0
   connectivity_plus: ^6.0.1
 
 

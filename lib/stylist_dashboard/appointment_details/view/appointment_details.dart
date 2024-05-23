@@ -21,7 +21,7 @@ class Appointmentdetails extends StatelessWidget {
               width: context.screenWidth,
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: AppColors.bgDarkColor,
+                color: Styles.darkColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -83,7 +83,7 @@ class Appointmentdetails extends StatelessWidget {
               width: context.screenWidth,
               padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
-                color: AppColors.bgDarkColor,
+                color: Styles.darkColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(

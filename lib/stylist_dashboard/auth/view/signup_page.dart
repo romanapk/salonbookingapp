@@ -253,7 +253,7 @@ class SignupView extends StatelessWidget {
         ),
         child: Text(
           '${initialTime.hour}:${initialTime.minute}',
-          style: Theme.of(context).textTheme.subtitle1,
+          style: Theme.of(context).textTheme.bodySmall,
         ),
       ),
     );

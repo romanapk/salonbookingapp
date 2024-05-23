@@ -3,12 +3,12 @@ import '../Utils/app_style.dart';
 import '../customer_dashboard/appointment_details/view/appointment_details.dart';
 import '../customer_dashboard/total_appintment/controller/total_appointment.dart';
 
-class TotalAppointment extends StatelessWidget {
-  const TotalAppointment({super.key});
+class CustomerTotalAppointment extends StatelessWidget {
+  const CustomerTotalAppointment({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put((TotalAppointmentcontroller()));
+    var controller = Get.put(CustomerTotalAppointmentController());
 
     return Scaffold(
       appBar: AppBar(
@@ -16,11 +16,9 @@ class TotalAppointment extends StatelessWidget {
         title: "All Appointments".text.make(),
       ),
       body: FutureBuilder<QuerySnapshot>(
-        future: controller.getAppointments(),
+        future: controller.getConfirmedAppointments(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            // While data is being fetched, display a CircularProgressIndicator.
-
             return const Center(
               child: CircularProgressIndicator(),
             );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salonbookingapp/Utils/app_style.dart';
-import 'package:salonbookingapp/front_screens/about_screen.dart';
+import 'package:salonbookingapp/customer_dashboard/notifications/notifcation_page.dart';
 import 'package:salonbookingapp/front_screens/first_screen.dart';
 import 'package:salonbookingapp/front_screens/search_screen.dart';
 import 'package:salonbookingapp/front_screens/third_screen.dart';
@@ -18,8 +18,8 @@ class _AppShellState extends State<AppShell> {
   final List<Widget> _screens = [
     const FirstScreen(),
     const HomeScreen(),
-    const TotalAppointment(),
-    HomePage(),
+    const CustomerTotalAppointment(),
+    CustomerNotificationsPage(),
   ];
 
   @override
