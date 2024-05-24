@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:salonbookingapp/stylist_dashboard/auth/view/login_page.dart';
 
 import '../front_screens/app_shell.dart';
-import '../stylist_dashboard/bottombar_screen.dart';
 import 'customer_dashboard/auth/view/login_page.dart';
+import 'customer_dashboard/home/view/home_screen.dart';
 
 class RegisterSelectionPage extends StatefulWidget {
   @override

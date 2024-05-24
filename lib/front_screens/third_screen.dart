@@ -15,54 +15,82 @@ class CustomerTotalAppointment extends StatelessWidget {
         backgroundColor: Styles.bgColor,
         title: "All Appointments".text.make(),
       ),
-      body: FutureBuilder<QuerySnapshot>(
-        future: controller.getConfirmedAppointments(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            var data = snapshot.data?.docs;
+      body: Obx(() {
+        if (controller.confirmedAppointments.isEmpty) {
+          return const Center(
+            child: Text("No confirmed appointments"),
+          );
+        }
 
-            return Padding(
-              padding: const EdgeInsets.all(10),
-              child: ListView.builder(
-                itemCount: data?.length ?? 0,
-                itemBuilder: (BuildContext context, index) {
-                  return ListTile(
-                    onTap: () {
-                      Get.to(() => Appointmentdetails(
-                            doc: data[index],
-                          ));
-                    },
-                    leading: CircleAvatar(
-                      child: ClipOval(
-                        child: Image.asset(
-                          AppAssets.imgDoctor,
-                          fit: BoxFit.cover,
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                    ),
-                    title: data![index]['appStylistName']
-                        .toString()
-                        .text
-                        .semiBold
-                        .make(),
-                    subtitle:
-                        "${data[index]['appDay']} - ${data[index]['appTime']}"
-                            .toString()
-                            .text
-                            .make(),
-                  );
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView.builder(
+            itemCount: controller.confirmedAppointments.length,
+            itemBuilder: (BuildContext context, index) {
+              var appointment = controller.confirmedAppointments[index];
+              return ListTile(
+                onTap: () {
+                  Get.to(() => Appointmentdetails(doc: appointment));
                 },
-              ),
-            );
-          }
-        },
-      ),
+                leading: CircleAvatar(
+                  child: ClipOval(
+                    child: Image.asset(
+                      AppAssets.imgDoctor,
+                      fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+                ),
+                title: appointment['appStylistName']
+                    .toString()
+                    .text
+                    .semiBold
+                    .make(),
+                subtitle: "${appointment['appDay']} - ${appointment['appTime']}"
+                    .toString()
+                    .text
+                    .make(),
+                trailing: IconButton(
+                  icon: Icon(Icons.cancel, color: Colors.red),
+                  onPressed: () {
+                    _showCancelConfirmationDialog(context, appointment.id);
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      }),
+    );
+  }
+
+  void _showCancelConfirmationDialog(
+      BuildContext context, String appointmentId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Cancel Appointment"),
+          content: Text("Are you sure you want to cancel the appointment?"),
+          actions: [
+            TextButton(
+              child: Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text("Yes"),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                Get.find<CustomerTotalAppointmentController>()
+                    .cancelAppointment(appointmentId, context);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

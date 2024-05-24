@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:salonbookingapp/stylist_dashboard/profile_setup.dart';
+import 'package:salonbookingapp/stylist_dashboard/notifications/stylist_notifications.dart';
 
 import '../colors/app_colors.dart';
 import 'image_slider.dart';
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                           builder: (builder) =>
-                              const DoctorProfileSetupScreen()),
+                              const StylistNotificationsPage()),
                     );
                   },
                   child: const Text(
