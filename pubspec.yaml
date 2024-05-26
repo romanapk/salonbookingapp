@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  google_maps_flutter: ^2.6.1
+  location: ^5.0.3
+
   cupertino_icons: ^1.0.6
   carousel_slider: ^4.0.0
 

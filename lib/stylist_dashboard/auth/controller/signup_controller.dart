@@ -26,7 +26,7 @@ class SignupController extends GetxController {
       const PopupMenuItem(value: 'Makeup', child: Text('Makeup')),
       const PopupMenuItem(value: 'Eye', child: Text('Eye')),
     ];
-// Asdfgh1@  a@gmail.com
+
     showMenu(
       context: context,
       position: RelativeRect.fromRect(
@@ -56,7 +56,7 @@ class SignupController extends GetxController {
         );
         if (userCredential != null) {
           var store = FirebaseFirestore.instance
-              .collection('stylists')
+              .collection('pendingStylists')
               .doc(userCredential!.user!.uid);
           await store.set({
             'stylistId': userCredential!.user!.uid,
@@ -70,8 +70,9 @@ class SignupController extends GetxController {
             'stylistRating': '4',
             'stylistService': serviceController.text,
             'stylistTiming': timeController.text,
+            'status': 'pending', // Set status to pending initially
           });
-          VxToast.show(context, msg: "Signup Successful");
+          VxToast.show(context, msg: "Your request has been sent");
         }
         isLoading(false);
       } catch (e) {
@@ -79,14 +80,11 @@ class SignupController extends GetxController {
         // Check the type of exception and show a toast accordingly
         if (e is FirebaseAuthException) {
           if (e.code == 'email-already-in-use') {
-            // The email address is already in use by another account
             VxToast.show(context, msg: "Already have an account");
           } else {
-            // Handle other FirebaseAuth exceptions
             VxToast.show(context, msg: "No internet connection");
           }
         } else {
-          // Handle other exceptions (not related to FirebaseAuth)
           VxToast.show(context, msg: "Try after some time ");
         }
         log("$e");
@@ -109,14 +107,14 @@ class SignupController extends GetxController {
     await FirebaseAuth.instance.signOut();
   }
 
-  //vlidateemail
+  //validateemail
   String? validateemail(value) {
     if (value!.isEmpty) {
       return 'please enter an email';
     }
     RegExp emailRefExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRefExp.hasMatch(value)) {
-      return 'please enter a valied email';
+      return 'please enter a valid email';
     }
     return null;
   }

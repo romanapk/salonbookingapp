@@ -12,7 +12,12 @@ class CategoryScreenn extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
-        title: const Text("Categories"),
+        title: const Text(
+          "Categories",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

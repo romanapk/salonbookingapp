@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:salonbookingapp/manager/auth/view/login_view.dart';
+import 'package:salonbookingapp/manager/manager_home_screen.dart';
 import 'package:salonbookingapp/stylist_dashboard/auth/view/login_page.dart';
 
 import '../front_screens/app_shell.dart';
@@ -20,10 +22,31 @@ class _RegisterSelectionPageState extends State<RegisterSelectionPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('I am a'),
+            title: const Text('I am '),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                ListTile(
+                  title: const Text('Admin'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Navigate to Doctor Registration Page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ManagerLoginView()),
+                    ).then((value) {
+                      if (value == true) {
+                        // Navigate to HomeScreen if registration as a doctor is successful
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ManagerHomeScreen()),
+                        );
+                      }
+                    });
+                  },
+                ),
                 ListTile(
                   title: const Text('Stylist'),
                   onTap: () {

@@ -7,10 +7,10 @@ class StylistNotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-        backgroundColor: Styles.bgColor, // Set app background color for app bar
-      ),
+      // appBar: AppBar(
+      //   title: const Text('Notifications'),
+      //   backgroundColor: Styles.bgColor, // Set app background color for app bar
+      // ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('notifications')

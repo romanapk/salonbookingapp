@@ -3,20 +3,18 @@ import 'package:flutter/material.dart';
 import '../../colors/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
-  final TextEditingController? controller;
-  final IconData? data;
-  final String? hintText;
-  bool? isObsecre = true;
-  bool? enabled = true;
+  final TextEditingController? textController;
+  final IconData? icon;
+  final String? hint;
+  final FormFieldValidator<String>? validator;
 
   CustomTextField({
-    super.key,
-    this.controller,
-    this.data,
-    this.hintText,
-    this.isObsecre,
-    this.enabled,
-  });
+    Key? key,
+    this.textController,
+    this.icon,
+    this.hint,
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +26,21 @@ class CustomTextField extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.all(10),
       child: TextFormField(
-        enabled: enabled,
-        controller: controller,
-        obscureText: isObsecre!,
+        controller: textController,
+        obscureText:
+            false, // You can set this to true if you want it to be obscure
         cursorColor: Theme.of(context).primaryColor,
-        style: TextStyle(color: AppColors.baseColor), // Text color
+        style: TextStyle(color: AppColors.baseColor),
         decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: Icon(
-            data,
-            color: AppColors.baseColor, // Set icon color
+            icon,
+            color: AppColors.baseColor,
           ),
           filled: true,
-          fillColor: Colors.grey, // Set text field fill color
+          fillColor: Colors.grey,
           focusColor: Theme.of(context).primaryColor,
-          hintText: hintText,
+          hintText: hint,
           hintStyle: TextStyle(
             color: Colors.greenAccent[500],
           ),
@@ -55,6 +53,7 @@ class CustomTextField extends StatelessWidget {
             borderSide: BorderSide(color: AppColors.baseColor),
           ),
         ),
+        validator: validator,
       ),
     );
   }

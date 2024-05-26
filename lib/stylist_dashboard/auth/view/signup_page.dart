@@ -1,4 +1,5 @@
-import '../../../customer_dashboard/bottombar_screen.dart';
+import 'package:salonbookingapp/stylist_dashboard/auth/view/message.dart';
+
 import '../../general/consts/consts.dart';
 import '../../widgets/coustom_textfield.dart';
 import '../controller/signup_controller.dart';
@@ -140,7 +141,7 @@ class SignupView extends StatelessWidget {
                           onPressed: () async {
                             await controller.signupUser(context);
                             if (controller.userCredential != null) {
-                              Get.offAll(() => AdminHomeScreen());
+                              Get.offAll(() => MessagePage());
                             }
                           },
                           child: controller.isLoading.value

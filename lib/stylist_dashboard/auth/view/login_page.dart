@@ -1,9 +1,8 @@
-import 'package:salonbookingapp/customer_dashboard/bottombar_screen.dart';
+import 'package:salonbookingapp/stylist_dashboard/auth/view/signup_page.dart';
 
 import '../../general/consts/consts.dart';
 import '../../widgets/coustom_textfield.dart';
 import '../controller/login_controller.dart';
-import 'signup_page.dart';
 
 class LoginVieww extends StatelessWidget {
   const LoginVieww({super.key});
@@ -37,70 +36,65 @@ class LoginVieww extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Form(
-                  key: controller.formkey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        CoustomTextField(
-                          validator: controller.validateemail,
-                          textcontroller: controller.emailController,
-                          icon: const Icon(Icons.email_outlined),
-                          hint: AppString.emailHint,
-                        ),
-                        18.heightBox,
-                        CoustomTextField(
-                          validator: controller.validpass,
-                          textcontroller: controller.passwordController,
-                          icon: const Icon(Icons.key),
-                          hint: AppString.passwordHint,
-                        ),
-                        20.heightBox,
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: "Forget Password ?".text.make(),
-                        ),
-                        20.heightBox,
-                        SizedBox(
-                          width: context.screenWidth * .7,
-                          height: 44,
-                          child: Obx(
-                            () => ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primeryColor,
-                                shape: const StadiumBorder(),
-                              ),
-                              onPressed: () async {
-                                await controller.loginUser(context);
-                                if (controller.userCredential != null) {
-                                  Get.offAll(() => AdminHomeScreen());
-                                }
-                              },
-                              child: controller.isLoading.value
-                                  ? const CircularProgressIndicator()
-                                  : const Text("Login"),
-                              //  controller.isLoading.value
-                              //     ? const LoadingIndicator()
-                              //     : AppString.login.text.white.make(),
+                key: controller.formkey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CoustomTextField(
+                        validator: controller.validateemail,
+                        textcontroller: controller.emailController,
+                        icon: const Icon(Icons.email_outlined),
+                        hint: AppString.emailHint,
+                      ),
+                      18.heightBox,
+                      CoustomTextField(
+                        validator: controller.validpass,
+                        textcontroller: controller.passwordController,
+                        icon: const Icon(Icons.key),
+                        hint: AppString.passwordHint,
+                      ),
+                      20.heightBox,
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: "Forget Password ?".text.make(),
+                      ),
+                      20.heightBox,
+                      SizedBox(
+                        width: context.screenWidth * .7,
+                        height: 44,
+                        child: Obx(
+                          () => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primeryColor,
+                              shape: const StadiumBorder(),
                             ),
+                            onPressed: () async {
+                              await controller.loginUser(context);
+                            },
+                            child: controller.isLoading.value
+                                ? const CircularProgressIndicator()
+                                : const Text("Login"),
                           ),
                         ),
-                        20.heightBox,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppString.dontHaveAccount.text.make(),
-                            8.widthBox,
-                            AppString.signup.text
-                                .color(AppColors.primeryColor)
-                                .make()
-                                .onTap(() {
-                              Get.to(() => const SignupView());
-                            }),
-                          ],
-                        )
-                      ],
-                    ),
-                  )),
+                      ),
+                      20.heightBox,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppString.dontHaveAccount.text.make(),
+                          8.widthBox,
+                          AppString.signup.text
+                              .color(AppColors.primeryColor)
+                              .make()
+                              .onTap(() {
+                            Get.to(() => const SignupView());
+                          }),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
           ],
         ),

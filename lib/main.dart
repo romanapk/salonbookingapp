@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       //home: AppShell(),
+      //home: ManagerLoginView(),
       home: SalonSplashScreen(),
       //home: Home(),
     );

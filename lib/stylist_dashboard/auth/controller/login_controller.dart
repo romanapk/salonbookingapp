@@ -1,5 +1,5 @@
+import '../../../customer_dashboard/bottombar_screen.dart';
 import '../../../general/consts/consts.dart';
-
 class LoginController extends GetxController {
   UserCredential? userCredential;
   var isLoading = false.obs;
@@ -16,10 +16,32 @@ class LoginController extends GetxController {
         userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
         isLoading(false);
-        VxToast.show(context, msg: "Login Sucessfull");
+        // Check if user credentials are valid
+        if (userCredential != null) {
+          // Check if the user's account is approved
+          var snapshot = await FirebaseFirestore.instance
+              .collection('stylists')
+              .doc(userCredential!.user!.uid)
+              .get();
+          if (snapshot.exists) {
+            var stylistData = snapshot.data() as Map<String, dynamic>;
+            if (stylistData['status'] == 'approved') {
+              // Stylist account is approved, allow login
+              Get.offAll(() => AdminHomeScreen());
+              VxToast.show(context, msg: "Login Successful");
+            } else {
+              // Stylist account is not approved yet
+              VxToast.show(context, msg: "Your account is pending approval");
+            }
+          } else {
+            VxToast.show(context, msg: "Account not found");
+          }
+        } else {
+          VxToast.show(context, msg: "Login Failed");
+        }
       } catch (e) {
         isLoading(false);
-        VxToast.show(context, msg: "wrong email or password");
+        VxToast.show(context, msg: "Wrong email or password");
       }
     }
   }
@@ -31,7 +53,7 @@ class LoginController extends GetxController {
     }
     RegExp emailRefExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRefExp.hasMatch(value)) {
-      return 'please enter a valied email';
+      return 'please enter a valid email';
     }
     return null;
   }

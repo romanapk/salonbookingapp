@@ -82,7 +82,7 @@ class _HiveDashboardScreenState extends State<HiveDashboardScreen> {
             TextField(
               controller: patientnameController,
               decoration: const InputDecoration(
-                hintText: "Patient Name",
+                hintText: "Customer Name",
                 labelText: "Name",
                 labelStyle: TextStyle(color: AppColors.baseColor),
               ),
@@ -92,8 +92,8 @@ class _HiveDashboardScreenState extends State<HiveDashboardScreen> {
               controller: problemnameController,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
-                hintText: "Patient Problem",
-                labelText: "Problem ",
+                hintText: "Services",
+                labelText: "Services ",
                 labelStyle: TextStyle(color: AppColors.baseColor),
               ),
             ),
@@ -218,7 +218,7 @@ class _HiveDashboardScreenState extends State<HiveDashboardScreen> {
                 ),
               ),
               subtitle: Text(
-                " Patients Problem: ${currentItem['problem']}   date: ${currentItem['date']}",
+                " Customer Service: ${currentItem['problem']}   date: ${currentItem['date']}",
                 style: const TextStyle(
                   color: AppColors.textColor,
                 ),
