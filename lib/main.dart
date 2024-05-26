@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:salonbookingapp/splash_screen/splashscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'colors/app_colors.dart';
 import 'global/global.dart';
+import 'manager/auth/view/login_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,8 +44,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       //home: AppShell(),
-      //home: ManagerLoginView(),
-      home: SalonSplashScreen(),
+      home: ManagerLoginView(),
+      //home: RemovedStylistsScreen(),
       //home: Home(),
     );
   }
