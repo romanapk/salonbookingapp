@@ -5,15 +5,24 @@ class CoustomTextField extends StatelessWidget {
   final TextEditingController? textcontroller;
   final Widget icon;
   final Color? textcolor;
-  // ignore: prefer_typing_uninitialized_variables
-  final validator;
-  const CoustomTextField(
-      {super.key,
-      required this.hint,
-      this.textcontroller,
-      required this.icon,
-      this.textcolor,
-      this.validator});
+  final TextInputType? keyboardType;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final String? prefixText;
+  final String? Function(String?)? validator;
+
+  const CoustomTextField({
+    Key? key,
+    required this.hint,
+    this.textcontroller,
+    required this.icon,
+    this.textcolor,
+    this.keyboardType,
+    this.obscureText = false,
+    this.suffixIcon,
+    this.prefixText,
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +33,12 @@ class CoustomTextField extends StatelessWidget {
         hintText: hint,
         hintStyle: TextStyle(color: textcolor),
         border: const OutlineInputBorder(borderSide: BorderSide()),
+        prefixText: prefixText,
+        suffixIcon: suffixIcon,
       ),
       validator: validator,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
       autovalidateMode: AutovalidateMode.onUserInteraction,
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:salonbookingapp/general/consts/colors.dart';
 
-import '../../../customer_dashboard/widgets/text_field_header.dart';
+import '../../../general/consts/strings.dart';
+import '../../../stylist_dashboard/widgets/coustom_textfield.dart';
 import '../../manager_home_screen.dart';
 import '../controller/login_controller.dart';
 
@@ -19,25 +21,39 @@ class ManagerLoginView extends StatelessWidget {
         child: Column(
           children: [
             Image.asset('assets/manager_login.png', width: 150),
-            SizedBox(height: 20),
-            Text("Manager Login", style: TextStyle(fontSize: 24)),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
+            Text("Admin Login", style: TextStyle(fontSize: 24)),
+            SizedBox(height: 15),
             Form(
               key: controller.formkey,
               child: Column(
                 children: [
-                  CustomTextField(
-                    validator: controller.validateEmail,
-                    textController: controller.emailController,
-                    icon: Icons.email_outlined,
-                    hint: "Manager Email",
+                  CoustomTextField(
+                    textcontroller: controller.emailController,
+                    icon: const Icon(Icons.email_rounded),
+                    hint: AppString.emailHint,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!value.endsWith('.com')) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: 18),
-                  CustomTextField(
-                    validator: controller.validatePassword,
-                    textController: controller.passwordController,
-                    icon: Icons.key,
-                    hint: "Manager Password",
+                  CoustomTextField(
+                    textcontroller: controller.passwordController,
+                    icon: const Icon(Icons.lock),
+                    hint: "Password",
+                    obscureText: !controller.isPasswordVisible.value,
+                    suffixIcon: IconButton(
+                      icon: Icon(controller.isPasswordVisible.value
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                      onPressed: controller.togglePasswordVisibility,
+                    ),
                   ),
                   SizedBox(height: 20),
                   SizedBox(
@@ -46,7 +62,7 @@ class ManagerLoginView extends StatelessWidget {
                     child: Obx(
                       () => ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
+                          backgroundColor: AppColors.primeryColor,
                           shape: const StadiumBorder(),
                         ),
                         onPressed: () async {

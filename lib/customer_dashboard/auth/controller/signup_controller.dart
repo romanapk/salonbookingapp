@@ -6,11 +6,56 @@ class SignupController extends GetxController {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  var isPasswordVisible = false.obs;
   UserCredential? userCredential;
   var isLoading = false.obs;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  signupUser(context) async {
+  @override
+  void onInit() {
+    super.onInit();
+    loadUserData();
+  }
+
+  void loadUserData() {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      nameController.text = user.displayName ?? '';
+      emailController.text = user.email ?? '';
+    }
+  }
+
+  Future<void> updateUser(BuildContext context) async {
+    if (formkey.currentState!.validate()) {
+      try {
+        isLoading(true);
+        var user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          await user.updateEmail(emailController.text);
+          await user.updatePassword(passwordController.text);
+          await user.updateDisplayName(nameController.text);
+          var store =
+              FirebaseFirestore.instance.collection('users').doc(user.uid);
+          await store.update({
+            'fullname': nameController.text,
+            'email': emailController.text,
+          });
+          VxToast.show(context, msg: "Profile Updated Successfully");
+        }
+        isLoading(false);
+      } catch (e) {
+        isLoading(false);
+        VxToast.show(context, msg: "Failed to update profile");
+        log("$e");
+      }
+    }
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  Future<void> signupUser(BuildContext context) async {
     if (formkey.currentState!.validate()) {
       try {
         isLoading(true);
@@ -29,91 +74,68 @@ class SignupController extends GetxController {
             'password': passwordController.text,
             'email': emailController.text,
           });
-          VxToast.show(context, msg: "Signup Sucessfull");
+          VxToast.show(context, msg: "Signup Successful");
         }
         isLoading(false);
       } catch (e) {
         isLoading(false);
-        // Check the type of exception and show a toast accordingly
         if (e is FirebaseAuthException) {
           if (e.code == 'email-already-in-use') {
-            // The email address is already in use by another account
-            VxToast.show(context, msg: "Allready have an account");
+            VxToast.show(context, msg: "Already have an account");
           } else {
-            // Handle other FirebaseAuth exceptions
             VxToast.show(context, msg: "No internet connection");
           }
         } else {
-          // Handle other exceptions (not related to FirebaseAuth)
-          VxToast.show(context, msg: "Try after some time ");
+          VxToast.show(context, msg: "Try after some time");
         }
         log("$e");
       }
     }
   }
 
-  storeUserData(
-      String uid, String fullname, String email, String password) async {
-    var store = FirebaseFirestore.instance.collection('users').doc(uid);
-    await store.set({
-      'uid': uid,
-      'fullname': fullname,
-      'password': email,
-      'email': password,
-    });
-  }
-
-  signout() async {
+  Future<void> signout() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  //vlidateemail
-  String? validateemail(value) {
+  String? validateemail(String? value) {
     if (value!.isEmpty) {
-      return 'please enter an email';
+      return 'Please enter an email';
     }
-    RegExp emailRefExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRefExp.hasMatch(value)) {
-      return 'please enter a valied email';
+    RegExp emailRegExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Please enter a valid email';
     }
     return null;
   }
 
-  //validate pass
-  String? validpass(value) {
+  String? validpass(String? value) {
     if (value!.isEmpty) {
       return 'Please enter a password';
     }
-    // Check for at least one capital letter
     if (!value.contains(RegExp(r'[A-Z]'))) {
       return 'Password must contain at least one capital letter';
     }
-    // Check for at least one number
     if (!value.contains(RegExp(r'[0-9]'))) {
       return 'Password must contain at least one number';
     }
-    // Check for at least one special character
     if (!value.contains(RegExp(r'[!@#\$&*~]'))) {
       return 'Password must contain at least one special character (!@#\$&*~)';
     }
-    // Check for overall pattern
     RegExp passwordRegExp =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (!passwordRegExp.hasMatch(value)) {
-      return 'Your Password Must Contain At Least 8 Characters';
+      return 'Your password must contain at least 8 characters';
     }
-
     return null;
   }
 
-  //validate name
-  String? validname(value) {
+  String? validname(String? value) {
     if (value!.isEmpty) {
-      return 'please enter a password';
+      return 'Please enter a name';
     }
-    RegExp emailRefExp = RegExp(r'^.{5,}$');
-    if (!emailRefExp.hasMatch(value)) {
-      return 'Password enter a valid name';
+    RegExp nameRegExp = RegExp(r'^.{5,}$');
+    if (!nameRegExp.hasMatch(value)) {
+      return 'Please enter a valid name';
     }
     return null;
   }

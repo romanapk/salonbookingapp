@@ -8,6 +8,7 @@ class ManagerLoginController extends GetxController {
   var passwordController = TextEditingController();
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool isLoggedIn = false;
+  var isPasswordVisible = false.obs;
 
   loginManager(context) async {
     if (formkey.currentState!.validate()) {
@@ -48,5 +49,9 @@ class ManagerLoginController extends GetxController {
       return 'Please enter a password';
     }
     return null;
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
 }

@@ -11,7 +11,7 @@ class ContactUsScreen extends StatelessWidget {
       body: ContactUs(
         cardColor: Colors.white,
         textColor: Colors.teal.shade900,
-        logo: const AssetImage('images/logo.jpg'),
+        //  logo: const AssetImage('images/logo.jpg'),
         email: 'romanatahir420@gmail.com',
         companyName: '',
         companyColor: Colors.teal.shade100,

@@ -1,9 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:salonbookingapp/stylist_dashboard/stylist_profile/profilescreen.dart';
 
 import '../Utils/app_style.dart';
 import '../scheduling_page/scheduling_page.dart';
 import '../stylist_dashboard/profile_setup.dart';
+import '../stylist_dashboard/stylist_drawer/stylistdrawer.dart';
 import 'home_page.dart';
 
 class AdminHomeScreen extends StatefulWidget {
@@ -24,6 +26,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         backgroundColor: Styles.bgColor,
         title: const Text('Salon Booking App'),
       ),
+      drawer: StylistDrawer(),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -34,7 +37,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         children: [
           const HomePage(),
           SchedulingPage(),
-          DoctorProfileSetupScreen(),
+          StylistProfileScreen(),
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(

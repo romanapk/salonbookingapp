@@ -40,27 +40,61 @@ class SignupView extends StatelessWidget {
                       textcontroller: controller.nameController,
                       hint: AppString.fullName,
                       icon: const Icon(Icons.person),
-                      validator: controller.validname,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+                          return 'Please enter alphabets only';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 15),
                     CoustomTextField(
                       textcontroller: controller.phoneController,
                       icon: const Icon(Icons.phone),
                       hint: "Enter your phone number",
+                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your phone number';
+                        }
+                        if (!RegExp(r'^[0-9+\-]+$').hasMatch(value)) {
+                          return 'Please enter a valid phone number';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 15),
                     CoustomTextField(
                       textcontroller: controller.emailController,
                       icon: const Icon(Icons.email_rounded),
                       hint: AppString.emailHint,
-                      validator: controller.validateemail,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!value.endsWith('.com')) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 15),
-                    CoustomTextField(
-                      textcontroller: controller.passwordController,
-                      icon: const Icon(Icons.key),
-                      hint: AppString.passwordHint,
-                      validator: controller.validpass,
+                    Obx(
+                      () => CoustomTextField(
+                        textcontroller: controller.passwordController,
+                        icon: const Icon(Icons.lock),
+                        hint: "Password",
+                        obscureText: !controller.isPasswordVisible.value,
+                        suffixIcon: IconButton(
+                          icon: Icon(controller.isPasswordVisible.value
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: controller.togglePasswordVisibility,
+                        ),
+                      ),
                     ),
                     15.heightBox,
                     GestureDetector(
@@ -97,10 +131,21 @@ class SignupView extends StatelessWidget {
                     ),
                     const SizedBox(height: 15),
                     CoustomTextField(
-                      textcontroller: controller.aboutController,
-                      icon: const Icon(Icons.person_rounded),
-                      hint: "write something about your main services",
-                      validator: controller.validfield,
+                      textcontroller: controller.basePriceController,
+                      icon: const Icon(Icons.attach_money),
+                      hint: "Base Price",
+                      prefixText: "PKR ",
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your base price';
+                        }
+                        final priceRegExp = RegExp(r'^[0-9]+$');
+                        if (!priceRegExp.hasMatch(value)) {
+                          return 'Please enter a valid price';
+                        }
+                        return null;
+                      },
+                      keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 15),
                     CoustomTextField(

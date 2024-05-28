@@ -75,7 +75,7 @@ class DoctorProfile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    "About".text.semiBold.size(AppFontSize.size18).make(),
+                    "Base Price".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
                     doc['stylistAbout']
                         .toString()

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Utils/app_style.dart';
 import '../customer_dashboard/category/view/category_view.dart';
+import '../customer_dashboard/customer_drawer/drawer.dart';
 import 'image_slider.dart';
 
 class FirstScreen extends StatelessWidget {
@@ -47,6 +48,7 @@ class FirstScreen extends StatelessWidget {
           ),
         ),
       ),
+      drawer: CustomerDrawer(),
       body: ListView(
         children: [
           const ImageSlider(),

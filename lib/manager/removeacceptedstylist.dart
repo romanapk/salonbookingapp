@@ -72,7 +72,7 @@ class RemovedStylistsScreen extends StatelessWidget {
             Text('Address: ${stylist['stylistAddress'] ?? 'No Address'}'),
             Text('Category: ${stylist['stylistCategory'] ?? 'No Category'}'),
             Text('Service: ${stylist['stylistService'] ?? 'No Service'}'),
-            Text('About: ${stylist['stylistAbout'] ?? 'No About'}'),
+            Text('Base Price: ${stylist['stylistAbout'] ?? 'No Base Price'}'),
             Text('Timing: ${stylist['stylistTiming'] ?? 'No Timing'}'),
           ],
         ),

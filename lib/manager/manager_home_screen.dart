@@ -164,7 +164,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
             Text('Address: ${stylist['stylistAddress']}'),
             Text('Category: ${stylist['stylistCategory']}'),
             Text('Service: ${stylist['stylistService']}'),
-            Text('About: ${stylist['stylistAbout']}'),
+            Text('Base Price: ${stylist['stylistAbout']}'),
             Text('Timing: ${stylist['stylistTiming']}'),
           ],
         ),

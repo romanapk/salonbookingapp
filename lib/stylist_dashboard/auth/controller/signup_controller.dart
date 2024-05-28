@@ -9,11 +9,15 @@ class SignupController extends GetxController {
   var passwordController = TextEditingController();
   var categoryController = TextEditingController();
   var timeController = TextEditingController();
-  var aboutController = TextEditingController();
+  var basePriceController =
+      TextEditingController(); // New controller for base price
   var addressController = TextEditingController();
   var serviceController = TextEditingController();
   UserCredential? userCredential;
   var isLoading = false.obs;
+  var isPasswordVisible =
+      false.obs; // Observed variable to toggle password visibility
+
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   RxString selectedValue = "Facial".obs;
 
@@ -63,7 +67,7 @@ class SignupController extends GetxController {
             'stylistName': nameController.text,
             'stylistPassword': passwordController.text,
             'stylistEmail': emailController.text,
-            'stylistAbout': aboutController.text,
+            'stylistAbout': basePriceController.text,
             'stylistAddress': addressController.text,
             'stylistCategory': categoryController.text,
             'stylistPhone': phoneController.text,
@@ -167,5 +171,9 @@ class SignupController extends GetxController {
       return 'please fill this document';
     }
     return null;
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible.value = !isPasswordVisible.value;
   }
 }
