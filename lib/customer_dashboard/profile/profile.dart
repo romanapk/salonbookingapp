@@ -29,11 +29,12 @@ class ProfileScreen extends StatelessWidget {
                   AppAssets.imgWelcome,
                   width: context.screenHeight * .23,
                 ),
-                8.heightBox,
+                const SizedBox(
+                    height: 8.0), // Use SizedBox for consistent spacing
                 'Profile'.text.size(AppFontSize.size18).semiBold.make(),
               ],
             ),
-            15.heightBox,
+            const SizedBox(height: 15.0), // Consistent spacing
             Expanded(
               flex: 2,
               child: Form(
@@ -47,37 +48,37 @@ class ProfileScreen extends StatelessWidget {
                         icon: const Icon(Icons.person),
                         validator: controller.validname,
                       ),
-                      15.heightBox,
+                      const SizedBox(height: 15.0),
                       CoustomTextField(
                         textcontroller: controller.emailController,
                         icon: const Icon(Icons.email_outlined),
                         hint: 'Email',
                         validator: controller.validateemail,
                       ),
-                      15.heightBox,
+                      const SizedBox(height: 15.0),
                       Obx(() => CoustomTextField(
                             textcontroller: controller.passwordController,
                             icon: const Icon(Icons.lock),
                             hint: 'Password',
-                            obscureText: !controller.isPasswordVisible.value,
+                            obscureText: !controller.isPasswordVisible
+                                .value, // Toggle password visibility
+                            validator: controller.validpass,
                             suffixIcon: IconButton(
                               icon: Icon(
                                 controller.isPasswordVisible.value
                                     ? Icons.visibility
                                     : Icons.visibility_off,
                               ),
-                              onPressed: () {
-                                controller.togglePasswordVisibility();
-                              },
+                              onPressed: () =>
+                                  controller.togglePasswordVisibility(),
                             ),
-                            validator: controller.validpass,
                           )),
-                      20.heightBox,
-                      SizedBox(
-                        width: context.screenWidth * .7,
-                        height: 44,
-                        child: Obx(
-                          () => ElevatedButton(
+                      const SizedBox(height: 20.0),
+                      Obx(
+                        () => SizedBox(
+                          width: context.screenWidth * .7,
+                          height: 44,
+                          child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primeryColor,
                               shape: const StadiumBorder(),
@@ -93,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      20.heightBox,
+                      const SizedBox(height: 20.0),
                       SizedBox(
                         width: context.screenWidth * .7,
                         height: 44,
@@ -104,7 +105,8 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           onPressed: () async {
                             await controller.signout();
-                            Get.offAll(() => SalonSplashScreen());
+                            Get.offAll(() =>
+                                SalonSplashScreen()); // Navigate to splash screen after logout
                           },
                           child: 'Logout'.text.white.make(),
                         ),

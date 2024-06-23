@@ -69,7 +69,7 @@ class _AppShellState extends State<AppShell> {
             label: 'Book Seat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.info),
+            icon: Icon(Icons.person, size: 30),
             label: 'Profile',
           ),
         ],

@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../../general/list/home_icon_list.dart';
 import '../Utils/app_style.dart';
 import '../customer_dashboard/category_details/view/category_details.dart';
@@ -49,9 +53,9 @@ class HomeScreen extends StatelessWidget {
                   IconButton(
                       onPressed: () {
                         Get.to(() => SearchView(
-                              searchQuery:
-                                  searchcontroller.searchQueryController.text,
-                            ));
+                          searchQuery:
+                          searchcontroller.searchQueryController.text,
+                        ));
                       },
                       icon: const Icon(Icons.search))
                 ],
@@ -125,11 +129,14 @@ class HomeScreen extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemCount: data?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
+                              var docData = data![index].data() as Map<String, dynamic>;
+                              var stylistName = docData['stylistName'] ?? 'Unknown';
+                              var stylistCategory = docData['stylistCategory'] ?? 'Unknown';
                               return GestureDetector(
                                 onTap: () {
                                   Get.to(() => DoctorProfile(
-                                        doc: data[index],
-                                      ));
+                                    doc: data[index],
+                                  ));
                                 },
                                 child: Container(
                                   clipBehavior: Clip.hardEdge,
@@ -156,12 +163,12 @@ class HomeScreen extends StatelessWidget {
                                         ),
                                       ),
                                       const Divider(),
-                                      data![index]['stylistName']
+                                      stylistName
                                           .toString()
                                           .text
                                           .size(AppFontSize.size16)
                                           .make(),
-                                      data[index]['stylistCategory']
+                                      stylistCategory
                                           .toString()
                                           .text
                                           .size(AppFontSize.size12)

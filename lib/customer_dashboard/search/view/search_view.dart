@@ -23,6 +23,19 @@ class SearchView extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else {
+            var filteredStylists = snapshot.data!.docs.where((doc) {
+              return doc['stylistName']
+                  .toString()
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase());
+            }).toList();
+
+            if (filteredStylists.isEmpty) {
+              return Center(
+                child: "No Stylist found, try another name".text.makeCentered(),
+              );
+            }
+
             return Padding(
               padding: const EdgeInsets.all(10),
               child: GridView.builder(
@@ -32,68 +45,59 @@ class SearchView extends StatelessWidget {
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
                 ),
-                itemCount: snapshot.data!.docs.length,
+                itemCount: filteredStylists.length,
                 itemBuilder: (BuildContext context, index) {
-                  var doc = snapshot.data!.docs[index];
-                  return !(doc['stylistName']
-                          .toString()
-                          .toLowerCase()
-                          .contains(searchQuery.toLowerCase()))
-                      ? Center(
-                          child: "No Stylist found try another name"
-                              .text
-                              .makeCentered(),
-                        )
-                      : GestureDetector(
-                          onTap: () {
-                            Get.to(
-                              () => DoctorProfile(
-                                doc: doc,
+                  var doc = filteredStylists[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => DoctorProfile(
+                          doc: doc,
+                        ),
+                      );
+                    },
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        color: AppColors.bgDarkColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      padding: const EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(right: 8),
+                      height: 120,
+                      width: 130,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              width: 130,
+                              color: Styles.textColor,
+                              child: Image.asset(
+                                AppAssets.imgLogin,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
                               ),
-                            );
-                          },
-                          child: Container(
-                            clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                              color: AppColors.bgDarkColor,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            padding: const EdgeInsets.only(bottom: 5),
-                            margin: const EdgeInsets.only(right: 8),
-                            height: 120,
-                            width: 130,
-                            child: Column(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(15),
-                                  child: Container(
-                                    width: 130,
-                                    color: Styles.textColor,
-                                    child: Image.asset(
-                                      AppAssets.imgLogin,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const Divider(),
-                                doc['stylistName']
-                                    .toString()
-                                    .text
-                                    .size(AppFontSize.size16)
-                                    .make(),
-                                VxRating(
-                                  onRatingUpdate: (value) {},
-                                  maxRating: 5,
-                                  count: 5,
-                                  value: double.parse(
-                                      doc['stylistRating'].toString()),
-                                  stepInt: true,
-                                ),
-                              ],
                             ),
                           ),
-                        );
+                          const Divider(),
+                          doc['stylistName']
+                              .toString()
+                              .text
+                              .size(AppFontSize.size16)
+                              .make(),
+                          VxRating(
+                            onRatingUpdate: (value) {},
+                            maxRating: 5,
+                            count: 5,
+                            value:
+                                double.parse(doc['stylistRating'].toString()),
+                            stepInt: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
                 },
               ),
             );
