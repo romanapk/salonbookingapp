@@ -51,7 +51,7 @@ class SearchView extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       Get.to(
-                        () => DoctorProfile(
+                        () => StylistProfile(
                           doc: doc,
                         ),
                       );

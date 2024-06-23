@@ -1,32 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:velocity_x/velocity_x.dart';
 import '../../../general/list/home_icon_list.dart';
 import '../Utils/app_style.dart';
 import '../customer_dashboard/category_details/view/category_details.dart';
-import '../customer_dashboard/doctor_profile/view/doctor_view.dart';
 import '../customer_dashboard/home/controller/home_controller.dart';
 import '../customer_dashboard/search/controller/search_controller.dart';
 import '../customer_dashboard/search/view/search_view.dart';
 import '../customer_dashboard/widgets/coustom_textfield.dart';
 import '../general/consts/consts.dart';
+import '../stylist_dashboard/stylist_profile/stylist_profile.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(HomeController());
-    var searchcontroller = Get.put(DocSearchController());
+    var searchController = Get.put(DocSearchController());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
         title: Row(
           children: [
-            AppString.welcome.text.make(),
-            5.widthBox,
-            "User".text.make()
+            Text("Welcome"),
+            SizedBox(width: 5),
+            Text("User"),
           ],
         ),
         elevation: 0,
@@ -34,8 +31,9 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //search section
+            // Search section
             Container(
               padding: const EdgeInsets.all(8),
               height: 70,
@@ -44,27 +42,29 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CoustomTextField(
-                      textcontroller: searchcontroller.searchQueryController,
+                      textcontroller: searchController.searchQueryController,
                       hint: AppString.search,
                       icon: const Icon(Icons.person_search_sharp),
                     ),
                   ),
-                  10.widthBox,
+                  SizedBox(width: 10),
                   IconButton(
-                      onPressed: () {
-                        Get.to(() => SearchView(
-                          searchQuery:
-                          searchcontroller.searchQueryController.text,
-                        ));
-                      },
-                      icon: const Icon(Icons.search))
+                    onPressed: () {
+                      Get.to(() => SearchView(
+                            searchQuery:
+                                searchController.searchQueryController.text,
+                          ));
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
                 ],
               ),
             ),
-            4.heightBox,
+            SizedBox(height: 4),
             Padding(
               padding: const EdgeInsets.all(8),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: 110,
@@ -74,10 +74,10 @@ class HomeScreen extends StatelessWidget {
                       itemCount: iconList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          //ontap for list
                           onTap: () {
                             Get.to(() => CategoryDetailsView(
-                                catName: iconListTitle[index]));
+                                  catName: iconListTitle[index],
+                                ));
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -92,8 +92,8 @@ class HomeScreen extends StatelessWidget {
                                   iconList[index],
                                   width: 50,
                                 ),
-                                5.heightBox,
-                                iconListTitle[index].text.make()
+                                SizedBox(height: 5),
+                                Text(iconListTitle[index]),
                               ],
                             ),
                           ),
@@ -101,106 +101,123 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  15.heightBox,
-                  //populer doctors
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: "Popular Stylists"
-                        .text
-                        .color(Styles.orangeColor)
-                        .size(AppFontSize.size16)
-                        .make(),
+                  SizedBox(height: 15),
+                  // Popular stylists
+                  Text(
+                    "Popular Stylists",
+                    style: TextStyle(
+                      color: Styles.orangeColor,
+                      fontSize: AppFontSize.size16,
+                    ),
                   ),
-                  10.heightBox,
+                  SizedBox(height: 10),
                   FutureBuilder<QuerySnapshot>(
                     future: controller.getDoctorList(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        var data = snapshot.data?.docs;
-                        return SizedBox(
-                          height: 195,
-                          child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: data?.length ?? 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              var docData = data![index].data() as Map<String, dynamic>;
-                              var stylistName = docData['stylistName'] ?? 'Unknown';
-                              var stylistCategory = docData['stylistCategory'] ?? 'Unknown';
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.to(() => DoctorProfile(
-                                    doc: data[index],
-                                  ));
-                                },
-                                child: Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.bgDarkColor,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  padding: const EdgeInsets.only(bottom: 5),
-                                  margin: const EdgeInsets.only(right: 8),
-                                  height: 120,
-                                  width: 130,
-                                  child: Column(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Container(
-                                          color: AppColors.whiteColor,
-                                          child: Image.asset(
-                                            AppAssets.imgDoctor,
-                                            height: 130,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(child: Text('No data available'));
+                      }
+                      var data = snapshot.data!.docs;
+
+                      // Sort data by average rating
+                      data.sort((a, b) {
+                        var aRating = (a.data()
+                                as Map<String, dynamic>)['stylistRating'] ??
+                            0.0;
+                        var bRating = (b.data()
+                                as Map<String, dynamic>)['stylistRating'] ??
+                            0.0;
+                        return bRating.compareTo(aRating);
+                      });
+
+                      return SizedBox(
+                        height: 195,
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var docData =
+                                data[index].data() as Map<String, dynamic>;
+                            var stylistName =
+                                docData['stylistName'] ?? 'Unknown';
+                            var stylistCategory =
+                                docData['stylistCategory'] ?? 'Unknown';
+
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(() => StylistProfile(doc: data[index]));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.bgDarkColor,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                margin: const EdgeInsets.only(right: 8),
+                                height: 120,
+                                width: 130,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Container(
+                                        color: AppColors.whiteColor,
+                                        height: 130,
+                                        width: double.infinity,
+                                        child: Image.asset(
+                                          AppAssets.imgDoctor,
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                      const Divider(),
-                                      stylistName
-                                          .toString()
-                                          .text
-                                          .size(AppFontSize.size16)
-                                          .make(),
-                                      stylistCategory
-                                          .toString()
-                                          .text
-                                          .size(AppFontSize.size12)
-                                          .make(),
-                                    ],
-                                  ),
+                                    ),
+                                    Divider(),
+                                    Text(
+                                      stylistName.toString(),
+                                      style: TextStyle(
+                                          fontSize: AppFontSize.size16),
+                                    ),
+                                    Text(
+                                      stylistCategory.toString(),
+                                      style: TextStyle(
+                                          fontSize: AppFontSize.size12),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
-                        );
-                      }
+                              ),
+                            );
+                          },
+                        ),
+                      );
                     },
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: "View All"
-                          .text
-                          .color(AppColors.primeryColor)
-                          .size(AppFontSize.size16)
-                          .make(),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Get.to(() => SearchView(searchQuery: ''));
+                      },
+                      child: Text(
+                        "View All",
+                        style: TextStyle(
+                          color: AppColors.primeryColor,
+                          fontSize: AppFontSize.size16,
+                        ),
+                      ),
                     ),
                   ),
-                  20.heightBox,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

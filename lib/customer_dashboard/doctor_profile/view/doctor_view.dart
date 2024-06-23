@@ -1,14 +1,25 @@
-import '../../../Utils/app_style.dart';
-import '../../../general/consts/consts.dart';
-import '../../../stylist_dashboard/widgets/coustom_button.dart';
-import '../../book_appointment/view/appointment_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
 
-class DoctorProfile extends StatelessWidget {
+import '../../../Utils/app_style.dart';
+import '../../../general/consts/colors.dart';
+import '../../../general/consts/fonts.dart';
+import '../../../general/consts/images.dart';
+import '../../../stylist_dashboard/stylist_controller.dart';
+import '../../all_reviews/give_review.dart';
+import '../../all_reviews/reviews.dart';
+
+class StylistProfile extends StatelessWidget {
   final DocumentSnapshot doc;
-  const DoctorProfile({Key? key, required this.doc}) : super(key: key);
+  const StylistProfile({Key? key, required this.doc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
@@ -19,6 +30,7 @@ class DoctorProfile extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
@@ -52,16 +64,30 @@ class DoctorProfile extends StatelessWidget {
                         doc['stylistCategory'].toString().text.make(),
                         8.heightBox,
                         VxRating(
-                          onRatingUpdate: (value) {},
+                          onRatingUpdate: (value) {
+                            // Update stylist's average rating
+                            Get.find<StylistController>()
+                                .rateStylist(doc.id, value as double);
+                          },
                           maxRating: 5,
                           count: 5,
                           value: double.parse(doc['stylistRating'].toString()),
                           stepInt: true,
                         ),
+                        8.heightBox,
+                        "Average Rating: ${doc['averageRating']}".text.make(),
                       ],
                     ),
                     const Spacer(),
-                    "See All reviews".text.color(AppColors.primeryColor).make()
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => AllReviewsPage(stylistId: doc.id));
+                      },
+                      child: "See All Reviews"
+                          .text
+                          .color(AppColors.primeryColor)
+                          .make(),
+                    ),
                   ],
                 ),
               ),
@@ -119,38 +145,17 @@ class DoctorProfile extends StatelessWidget {
                       ],
                     ),
                     15.heightBox,
-                    ListTile(
-                      title: "Contact Details"
-                          .text
-                          .semiBold
-                          .size(AppFontSize.size16)
-                          .make(),
-                      subtitle: "Book an Appointment for contact details"
-                          .text
-                          .size(AppFontSize.size12)
-                          .make(),
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => GiveReviewPage(stylistId: doc.id));
+                      },
+                      child: "Give Feedback or Review".text.make(),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(10),
-        child: CoustomButton(
-          onTap: () {
-            Get.to(
-              () => BookAppointmentView(
-                docId: doc['stylistId'],
-                docName: doc['stylistName'],
-                docNum: doc['stylistPhone'],
-                doc: doc,
-              ),
-            );
-          },
-          title: "Book an Appointment",
         ),
       ),
     );

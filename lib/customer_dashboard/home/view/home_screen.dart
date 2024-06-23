@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
-                                  Get.to(() => DoctorProfile(
+                                  Get.to(() => StylistProfile(
                                         doc: data[index],
                                       ));
                                 },

@@ -1,5 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import '../../../Utils/app_style.dart';
-import '../../../general/consts/consts.dart';
+import '../../customer_dashboard/all_reviews/give_review.dart';
+import '../../customer_dashboard/all_reviews/reviews.dart';
+import '../../general/consts/colors.dart';
+import '../../general/consts/fonts.dart';
+import '../../general/consts/images.dart';
+import '../stylist_controller.dart';
 
 class StylistProfile extends StatelessWidget {
   final DocumentSnapshot doc;
@@ -7,6 +18,8 @@ class StylistProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
@@ -17,6 +30,7 @@ class StylistProfile extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
@@ -50,16 +64,30 @@ class StylistProfile extends StatelessWidget {
                         doc['stylistCategory'].toString().text.make(),
                         8.heightBox,
                         VxRating(
-                          onRatingUpdate: (value) {},
+                          onRatingUpdate: (value) {
+                            // Update stylist's average rating
+                            Get.find<StylistController>()
+                                .rateStylist(doc.id, value as double);
+                          },
                           maxRating: 5,
                           count: 5,
                           value: double.parse(doc['stylistRating'].toString()),
                           stepInt: true,
                         ),
+                        8.heightBox,
+                        "Average Rating: ${doc['averageRating']}".text.make(),
                       ],
                     ),
                     const Spacer(),
-                    "See All reviews".text.color(AppColors.primeryColor).make()
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => AllReviewsPage(stylistId: doc.id));
+                      },
+                      child: "See All Reviews"
+                          .text
+                          .color(AppColors.primeryColor)
+                          .make(),
+                    ),
                   ],
                 ),
               ),
@@ -117,6 +145,12 @@ class StylistProfile extends StatelessWidget {
                       ],
                     ),
                     15.heightBox,
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.to(() => GiveReviewPage(stylistId: doc.id));
+                      },
+                      child: "Give Feedback or Review".text.make(),
+                    ),
                   ],
                 ),
               ),

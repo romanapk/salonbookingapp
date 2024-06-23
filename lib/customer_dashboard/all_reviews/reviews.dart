@@ -1,16 +1,22 @@
-import '../../Utils/app_style.dart';
-import '../../general/consts/consts.dart';
+import 'package:salonbookingapp/general/consts/consts.dart';
 
-class StylistNotificationsPage extends StatelessWidget {
-  const StylistNotificationsPage({Key? key}) : super(key: key);
+import '../../../Utils/app_style.dart';
+
+class AllReviewsPage extends StatelessWidget {
+  final String stylistId;
+  const AllReviewsPage({Key? key, required this.stylistId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Styles.bgColor,
+        title: "All Reviews".text.make(),
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('notifications')
-            .where('userId', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+            .collection('reviews')
+            .where('stylistId', isEqualTo: stylistId)
             .orderBy('timestamp', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
@@ -23,44 +29,43 @@ class StylistNotificationsPage extends StatelessWidget {
           if (snapshot.hasError) {
             return Center(
               child: Text(
-                'Error fetching notifications: ${snapshot.error}',
+                'Error fetching reviews: ${snapshot.error}',
                 style: TextStyle(color: Styles.textColor), // Set text color
               ),
             );
           }
 
-          var notifications = snapshot.data!.docs;
+          var reviews = snapshot.data!.docs;
 
-          if (notifications.isEmpty) {
+          if (reviews.isEmpty) {
             return Center(
               child: Text(
-                'No notifications',
+                'No reviews yet',
                 style: TextStyle(color: Styles.textColor), // Set text color
               ),
             );
           }
 
           return ListView.builder(
-            itemCount: notifications.length,
+            itemCount: reviews.length,
             itemBuilder: (context, index) {
-              var notification = notifications[index];
-              var notificationData =
-                  notification.data() as Map<String, dynamic>;
+              var review = reviews[index];
+              var reviewData = review.data() as Map<String, dynamic>;
 
               return Card(
                 margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 elevation: 4,
-                color: Styles.darkColor, // Set card background color
+                color: AppColors.bgDarkColor, // Set card background color
                 child: ListTile(
                   title: Text(
-                    notificationData['message'],
+                    reviewData['message'],
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Styles.textColor, // Set text color
                     ),
                   ),
                   subtitle: Text(
-                    'Received: ${_formatTimestamp(notificationData['timestamp'])}',
+                    'Rated: ${reviewData['rating']} stars',
                     style: TextStyle(
                       color: Styles.textColor
                           .withOpacity(0.7), // Set text color with opacity
@@ -73,9 +78,5 @@ class StylistNotificationsPage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _formatTimestamp(Timestamp timestamp) {
-    return timestamp.toDate().toString();
   }
 }
