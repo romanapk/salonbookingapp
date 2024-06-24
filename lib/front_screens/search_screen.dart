@@ -1,12 +1,12 @@
 import '../../../general/list/home_icon_list.dart';
 import '../Utils/app_style.dart';
 import '../customer_dashboard/category_details/view/category_details.dart';
+import '../customer_dashboard/doctor_profile/view/doctor_view.dart';
 import '../customer_dashboard/home/controller/home_controller.dart';
 import '../customer_dashboard/search/controller/search_controller.dart';
 import '../customer_dashboard/search/view/search_view.dart';
 import '../customer_dashboard/widgets/coustom_textfield.dart';
 import '../general/consts/consts.dart';
-import '../stylist_dashboard/stylist_profile/stylist_profile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,9 +21,9 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Styles.bgColor,
         title: Row(
           children: [
-            Text("Welcome"),
+            Text("Welcome"), // Assuming AppString.welcome is a custom widget
             SizedBox(width: 5),
-            Text("User"),
+            Text("User"), // Assuming "User" is a static text
           ],
         ),
         elevation: 0,
@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 15),
-                  // Popular stylists
+                  // Popular doctors
                   Text(
                     "Popular Stylists",
                     style: TextStyle(
@@ -126,17 +126,6 @@ class HomeScreen extends StatelessWidget {
                       }
                       var data = snapshot.data!.docs;
 
-                      // Sort data by average rating
-                      data.sort((a, b) {
-                        var aRating = (a.data()
-                                as Map<String, dynamic>)['stylistRating'] ??
-                            0.0;
-                        var bRating = (b.data()
-                                as Map<String, dynamic>)['stylistRating'] ??
-                            0.0;
-                        return bRating.compareTo(aRating);
-                      });
-
                       return SizedBox(
                         height: 195,
                         child: ListView.builder(
@@ -153,7 +142,9 @@ class HomeScreen extends StatelessWidget {
 
                             return GestureDetector(
                               onTap: () {
-                                Get.to(() => StylistProfile(doc: data[index]));
+                                Get.to(() => StylistProfileScreen(
+                                      stylistId: '',
+                                    ));
                               },
                               child: Container(
                                 decoration: BoxDecoration(

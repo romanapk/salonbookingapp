@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-Future<void> submitRating(
+void submitRating(
     String stylistId, String customerId, int rating, String review) async {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -42,6 +42,5 @@ Future<void> submitRating(
     print('Rating submitted successfully');
   } catch (e) {
     print('Error submitting rating: $e');
-    throw e; // Throw the error to handle it in the UI if needed
   }
 }
