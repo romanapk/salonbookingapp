@@ -1,6 +1,6 @@
 import '../../../Utils/app_style.dart';
 import '../../../general/consts/consts.dart';
-import '../../../stylist_dashboard/stylist_profile/stylist_profile.dart';
+import '../../doctor_profile/view/doctor_view.dart';
 
 class CategoryDetailsView extends StatelessWidget {
   final String catName;
@@ -77,7 +77,7 @@ class CategoryDetailsView extends StatelessWidget {
                       ],
                     ),
                   ).onTap(() {
-                    Get.to(() => StylistProfile(doc: data[index]));
+                    Get.to(() => DoctorProfile(doc: data[index]));
                   });
                 },
               ),

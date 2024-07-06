@@ -1,7 +1,7 @@
 import 'package:salonbookingapp/general/consts/consts.dart';
 
 import '../../../Utils/app_style.dart';
-import '../../../stylist_dashboard/stylist_profile/stylist_profile.dart';
+import '../../doctor_profile/view/doctor_view.dart';
 import '../../search/controller/search_controller.dart';
 import '../../search/view/search_view.dart';
 import '../../widgets/coustom_textfield.dart';
@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () {
-                                  Get.to(() => StylistProfile(
+                                  Get.to(() => DoctorProfile(
                                         doc: data[index],
                                       ));
                                 },
