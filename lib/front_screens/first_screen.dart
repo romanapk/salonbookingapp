@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Utils/app_style.dart';
+import '../chatbot/message_dart.dart';
 import '../customer_dashboard/category/view/category_view.dart';
 import '../customer_dashboard/customer_drawer/drawer.dart';
 import 'image_slider.dart';
@@ -49,15 +50,33 @@ class FirstScreen extends StatelessWidget {
         ),
       ),
       drawer: CustomerDrawer(),
-      body: ListView(
+      body: Stack(
         children: [
-          const ImageSlider(),
-          const SizedBox(height: 8),
-          Container(
-            height: 500, // Set a fixed height for the SearchScreen
-            child: CategoryScreenn(),
+          ListView(
+            children: [
+              const ImageSlider(),
+              const SizedBox(height: 8),
+              Container(
+                height: 500, // Set a fixed height for the CategoryScreen
+                child: CategoryScreenn(),
+              ),
+              const SizedBox(height: 8),
+            ],
           ),
-          const SizedBox(height: 8),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DialogeChat()),
+                );
+              },
+              child: const Icon(Icons.help_outline),
+              backgroundColor: Styles.orangeColor,
+            ),
+          ),
         ],
       ),
     );

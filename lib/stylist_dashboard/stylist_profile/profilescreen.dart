@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:salonbookingapp/Utils/app_style.dart';
+import 'package:salonbookingapp/general/consts/consts.dart';
+import 'package:salonbookingapp/stylist_dashboard/auth/controller/signup_controller.dart';
 
-import '../../../Utils/app_style.dart';
-import '../../../general/consts/consts.dart';
+import '../widgets/custom_new.dart';
 
 class StylistProfileScreen extends StatelessWidget {
   final SignupController controller = Get.put(SignupController());
@@ -66,21 +63,21 @@ class StylistProfileScreen extends StatelessWidget {
                 key: controller.formkey,
                 child: ListView(
                   children: [
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.nameController,
                       hint: 'Name',
                       label: 'Name',
                       validator: controller.validname,
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.phoneController,
                       hint: 'Phone',
                       label: 'Phone',
                       validator: controller.validfield,
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.emailController,
                       hint: 'Email',
                       label: 'Email',
@@ -88,35 +85,35 @@ class StylistProfileScreen extends StatelessWidget {
                       readOnly: true, // Email should be read-only
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.categoryController,
                       hint: 'Category',
                       label: 'Category',
                       validator: controller.validfield,
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.timeController,
                       hint: 'Available Timing',
                       label: 'Available Timing',
                       validator: controller.validfield,
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.basePriceController,
                       hint: 'Base Price',
                       label: 'Base Price',
                       validator: controller.validfield,
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.addressController,
                       hint: 'Address',
                       label: 'Address',
                       validator: controller.validfield,
                     ),
                     10.heightBox,
-                    CustomTextField(
+                    CoustomTextField(
                       controller: controller.serviceController,
                       hint: 'Home Service (Yes/No)',
                       label: 'Home Service (Yes/No)',

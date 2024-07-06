@@ -38,7 +38,7 @@ dependencies:
   geolocator: ^11.0.0
 
   datetime_picker_formfield: ^2.0.0
-  http: ^1.1.2
+  http: ^0.13.1
   lottie: ^3.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -48,6 +48,7 @@ dependencies:
   get: ^4.6.6
   velocity_x: ^4.2.0
   connectivity_plus: ^6.0.1
+  dialog_flowtter: ^0.3.3
 
 
 dev_dependencies:
@@ -75,6 +76,9 @@ flutter:
     - assets/
     - assets/images/
     - assets/icons/
+
+    - assets/dialog_flow_auth.json
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
