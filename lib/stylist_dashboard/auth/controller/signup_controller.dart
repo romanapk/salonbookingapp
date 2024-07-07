@@ -1,6 +1,13 @@
 import 'dart:developer';
+import 'dart:io';
 
-import '../../../general/consts/consts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class SignupController extends GetxController {
   var nameController = TextEditingController();
@@ -9,14 +16,14 @@ class SignupController extends GetxController {
   var passwordController = TextEditingController();
   var categoryController = TextEditingController();
   var timeController = TextEditingController();
-  var basePriceController =
-      TextEditingController(); // New controller for base price
+  var basePriceController = TextEditingController();
   var addressController = TextEditingController();
   var serviceController = TextEditingController();
   UserCredential? userCredential;
   var isLoading = false.obs;
-  var isPasswordVisible =
-      false.obs; // Observed variable to toggle password visibility
+  var isPasswordVisible = false.obs;
+  var isEditing = false.obs;
+  var profilePictureUrl = ''.obs;
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   RxString selectedValue = "Facial".obs;
@@ -49,7 +56,7 @@ class SignupController extends GetxController {
     });
   }
 
-  signupUser(context) async {
+  Future<void> signupUser(BuildContext context) async {
     if (formkey.currentState!.validate()) {
       try {
         isLoading(true);
@@ -74,14 +81,13 @@ class SignupController extends GetxController {
             'stylistRating': '4',
             'stylistService': serviceController.text,
             'stylistTiming': timeController.text,
-            'status': 'pending', // Set status to pending initially
+            'status': 'pending',
           });
           VxToast.show(context, msg: "Your request has been sent");
         }
         isLoading(false);
       } catch (e) {
         isLoading(false);
-        // Check the type of exception and show a toast accordingly
         if (e is FirebaseAuthException) {
           if (e.code == 'email-already-in-use') {
             VxToast.show(context, msg: "Already have an account");
@@ -96,7 +102,7 @@ class SignupController extends GetxController {
     }
   }
 
-  storeUserData(
+  Future<void> storeUserData(
       String uid, String fullname, String email, String password) async {
     var store = FirebaseFirestore.instance.collection('users').doc(uid);
     await store.set({
@@ -107,57 +113,81 @@ class SignupController extends GetxController {
     });
   }
 
-  signout() async {
+  Future<void> signout() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  //validateemail
-  String? validateemail(value) {
-    if (value!.isEmpty) {
-      return 'please enter an email';
+  Future<void> pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      await uploadImage(File(image.path));
     }
-    RegExp emailRefExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRefExp.hasMatch(value)) {
-      return 'please enter a valid email';
+  }
+
+  Future<void> uploadImage(File imageFile) async {
+    try {
+      isLoading(true);
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('profile_pictures/$userId');
+      UploadTask uploadTask = storageReference.putFile(imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      profilePictureUrl.value = await taskSnapshot.ref.getDownloadURL();
+      await FirebaseFirestore.instance
+          .collection('acceptedStylists')
+          .doc(userId)
+          .update({'profilePicture': profilePictureUrl.value});
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to upload image');
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  String? validateEmail(String? value) {
+    if (value!.isEmpty) {
+      return 'Please enter an email';
+    }
+    RegExp emailRegExp = RegExp(r'^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Please enter a valid email';
     }
     return null;
   }
 
-  //validate pass
+  String? validateField(String? value) {
+    if (value!.isEmpty) {
+      return 'Please fill this field';
+    }
+    return null;
+  }
+
+  String? validateName(String? value) {
+    if (value!.isEmpty) {
+      return 'Please enter a name';
+    }
+    return null;
+  }
+
   String? validpass(value) {
     if (value!.isEmpty) {
       return 'Please enter a password';
     }
-    // Check for at least one capital letter
     if (!value.contains(RegExp(r'[A-Z]'))) {
       return 'Password must contain at least one capital letter';
     }
-    // Check for at least one number
     if (!value.contains(RegExp(r'[0-9]'))) {
       return 'Password must contain at least one number';
     }
-    // Check for at least one special character
     if (!value.contains(RegExp(r'[!@#\$&*~]'))) {
       return 'Password must contain at least one special character (!@#\$&*~)';
     }
-    // Check for overall pattern
     RegExp passwordRegExp =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (!passwordRegExp.hasMatch(value)) {
       return 'Your Password Must Contain At Least 8 Characters';
-    }
-
-    return null;
-  }
-
-  //validate name
-  String? validname(value) {
-    if (value!.isEmpty) {
-      return 'please enter a password';
-    }
-    RegExp emailRefExp = RegExp(r'^.{5,}$');
-    if (!emailRefExp.hasMatch(value)) {
-      return 'Password enter a valid name';
     }
     return null;
   }
@@ -175,5 +205,24 @@ class SignupController extends GetxController {
 
   void togglePasswordVisibility() {
     isPasswordVisible.value = !isPasswordVisible.value;
+  }
+
+  void toggleEdit() {
+    isEditing.value = !isEditing.value;
+    if (!isEditing.value) {
+      resetControllers();
+    }
+  }
+
+  void resetControllers() {
+    nameController.clear();
+    phoneController.clear();
+    emailController.clear();
+    passwordController.clear();
+    categoryController.clear();
+    timeController.clear();
+    basePriceController.clear();
+    addressController.clear();
+    serviceController.clear();
   }
 }

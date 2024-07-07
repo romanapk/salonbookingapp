@@ -2,11 +2,16 @@ import '../../../general/list/home_icon_list.dart';
 import '../Utils/app_style.dart';
 import '../customer_dashboard/category_details/view/category_details.dart';
 import '../customer_dashboard/doctor_profile/view/doctor_view.dart';
-import '../customer_dashboard/home/controller/home_controller.dart';
 import '../customer_dashboard/search/controller/search_controller.dart';
 import '../customer_dashboard/search/view/search_view.dart';
 import '../customer_dashboard/widgets/coustom_textfield.dart';
 import '../general/consts/consts.dart';
+
+class HomeController extends GetxController {
+  Future<QuerySnapshot> getDoctorList() {
+    return FirebaseFirestore.instance.collection('acceptedStylists').get();
+  }
+}
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -139,6 +144,8 @@ class HomeScreen extends StatelessWidget {
                                 docData['stylistName'] ?? 'Unknown';
                             var stylistCategory =
                                 docData['stylistCategory'] ?? 'Unknown';
+                            var profilePictureUrl =
+                                docData['profilePicture'] ?? '';
 
                             return GestureDetector(
                               onTap: () {
@@ -164,9 +171,16 @@ class HomeScreen extends StatelessWidget {
                                         color: AppColors.whiteColor,
                                         height: 130,
                                         width: double.infinity,
-                                        child: Image.asset(
-                                          AppAssets.imgDoctor,
+                                        child: Image.network(
+                                          profilePictureUrl,
                                           fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(
+                                              AppAssets.imgDoctor,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),

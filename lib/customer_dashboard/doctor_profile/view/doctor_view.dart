@@ -9,6 +9,8 @@ class DoctorProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var stylistData = doc.data() as Map<String, dynamic>;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
@@ -35,27 +37,33 @@ class DoctorProfile extends StatelessWidget {
                       clipBehavior: Clip.hardEdge,
                       height: 75,
                       width: 75,
-                      child: Image.asset(
-                        AppAssets.imgLogin,
-                        fit: BoxFit.cover,
-                      ),
+                      child: stylistData['profilePicture'] != null
+                          ? Image.network(
+                              stylistData['profilePicture'],
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              AppAssets.imgLogin,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     15.widthBox,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        doc['stylistName']
+                        stylistData['stylistName']
                             .toString()
                             .text
                             .size(AppFontSize.size18)
                             .make(),
-                        doc['stylistCategory'].toString().text.make(),
+                        stylistData['stylistCategory'].toString().text.make(),
                         8.heightBox,
                         VxRating(
                           onRatingUpdate: (value) {},
                           maxRating: 5,
                           count: 5,
-                          value: double.parse(doc['stylistRating'].toString()),
+                          value: double.parse(
+                              stylistData['stylistRating'].toString()),
                           stepInt: true,
                         ),
                       ],
@@ -77,7 +85,7 @@ class DoctorProfile extends StatelessWidget {
                   children: [
                     "Base Price".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
-                    doc['stylistAbout']
+                    stylistData['stylistAbout']
                         .toString()
                         .text
                         .size(AppFontSize.size14)
@@ -85,7 +93,7 @@ class DoctorProfile extends StatelessWidget {
                     10.heightBox,
                     "Address".text.semiBold.size(AppFontSize.size18).make(),
                     5.heightBox,
-                    doc['stylistAddress']
+                    stylistData['stylistAddress']
                         .toString()
                         .text
                         .size(AppFontSize.size14)
@@ -97,7 +105,7 @@ class DoctorProfile extends StatelessWidget {
                         .size(AppFontSize.size18)
                         .make(),
                     5.heightBox,
-                    doc['stylistTiming']
+                    stylistData['stylistTiming']
                         .toString()
                         .text
                         .size(AppFontSize.size14)
@@ -111,9 +119,9 @@ class DoctorProfile extends StatelessWidget {
                             .size(AppFontSize.size18)
                             .make(),
                         5.heightBox,
-                        if (doc['stylistService'] == 'Yes')
+                        if (stylistData['stylistService'] == 'Yes')
                           "Yes".text.size(AppFontSize.size14).make()
-                        else if (doc['stylistService'] == 'No')
+                        else if (stylistData['stylistService'] == 'No')
                           "No".text.size(AppFontSize.size14).make(),
                         15.heightBox,
                       ],
@@ -143,9 +151,9 @@ class DoctorProfile extends StatelessWidget {
           onTap: () {
             Get.to(
               () => BookAppointmentView(
-                docId: doc['stylistId'],
-                docName: doc['stylistName'],
-                docNum: doc['stylistPhone'],
+                docId: stylistData['stylistId'],
+                docName: stylistData['stylistName'],
+                docNum: stylistData['stylistPhone'],
                 doc: doc,
               ),
             );

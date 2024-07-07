@@ -15,7 +15,7 @@ class CategoryDetailsView extends StatelessWidget {
       ),
       body: FutureBuilder<QuerySnapshot>(
         future: FirebaseFirestore.instance
-            .collection('stylists')
+            .collection('acceptedStylists')
             .where('stylistCategory', isEqualTo: catName)
             .get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -36,6 +36,7 @@ class CategoryDetailsView extends StatelessWidget {
                 ),
                 itemCount: data?.length ?? 0,
                 itemBuilder: (BuildContext context, index) {
+                  var stylistData = data![index].data() as Map<String, dynamic>;
                   return Container(
                     clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
@@ -53,15 +54,21 @@ class CategoryDetailsView extends StatelessWidget {
                           child: Container(
                             width: 130,
                             color: Styles.bgColor,
-                            child: Image.asset(
-                              AppAssets.imgLogin,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
+                            child: stylistData['profilePicture'] != null
+                                ? Image.network(
+                                    stylistData['profilePicture'],
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    AppAssets.imgLogin,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                         const Divider(),
-                        data![index]['stylistName']
+                        stylistData['stylistName']
                             .toString()
                             .text
                             .size(AppFontSize.size16)
@@ -71,7 +78,7 @@ class CategoryDetailsView extends StatelessWidget {
                           maxRating: 5,
                           count: 5,
                           value: double.parse(
-                              data[index]['stylistRating'].toString()),
+                              stylistData['stylistRating'].toString()),
                           stepInt: true,
                         ),
                       ],

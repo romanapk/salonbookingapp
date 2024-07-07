@@ -73,7 +73,7 @@ class FirstScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const DialogeChat()),
                 );
               },
-              child: const Icon(Icons.help_outline),
+              child: const Icon(Icons.chat_bubble),
               backgroundColor: Styles.orangeColor,
             ),
           ),

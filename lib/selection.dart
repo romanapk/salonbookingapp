@@ -5,7 +5,7 @@ import 'package:salonbookingapp/stylist_dashboard/auth/view/login_page.dart';
 
 import '../front_screens/app_shell.dart';
 import 'customer_dashboard/auth/view/login_page.dart';
-import 'customer_dashboard/home/view/home_screen.dart';
+import 'front_screens/search_screen.dart';
 
 class RegisterSelectionPage extends StatefulWidget {
   @override

@@ -1,5 +1,5 @@
-import '../../../customer_dashboard/bottombar_screen.dart';
-import '../../../general/consts/consts.dart';
+import 'package:salonbookingapp/customer_dashboard/bottombar_screen.dart';
+import 'package:salonbookingapp/general/consts/consts.dart';
 
 class LoginController extends GetxController {
   UserCredential? userCredential;
@@ -9,8 +9,8 @@ class LoginController extends GetxController {
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  //login if user enters valid email and password
-  loginUser(context) async {
+  // Login if user enters valid email and password
+  loginUser(BuildContext context) async {
     if (formkey.currentState!.validate()) {
       try {
         isLoading(true);
@@ -22,47 +22,36 @@ class LoginController extends GetxController {
           final uid = userCredential?.user!.uid;
           print('User signed in with UID: $uid');
 
-          // Check if the user's account is approved in the 'stylists' collection
+          // Check if the user's account is approved in either 'stylists' or 'acceptedStylists' collection
           var stylistSnapshot = await FirebaseFirestore.instance
               .collection('stylists')
               .doc(uid)
               .get();
 
-          if (stylistSnapshot.exists) {
-            var stylistData = stylistSnapshot.data() as Map<String, dynamic>;
-            print('Stylist data: $stylistData');
-            if (stylistData['status'] == 'approved') {
-              // Stylist account is approved, allow login
-              Get.offAll(() => AdminHomeScreen());
-              VxToast.show(context, msg: "Login Successful");
-              return;
-            }
-          }
-
-          // Check if the user is in the 'acceptedStylists' collection
           var acceptedStylistSnapshot = await FirebaseFirestore.instance
               .collection('acceptedStylists')
               .doc(uid)
               .get();
 
-          if (acceptedStylistSnapshot.exists) {
-            var acceptedStylistData =
-                acceptedStylistSnapshot.data() as Map<String, dynamic>;
-            print('Accepted Stylist data: $acceptedStylistData');
-            if (acceptedStylistData['status'] == 'approved') {
-              // Accepted Stylist account is approved, allow login
-              Get.offAll(() => AdminHomeScreen());
-              VxToast.show(context, msg: "Login Successful");
-              return;
-            } else {
-              VxToast.show(context, msg: "Your account is pending approval");
-            }
+          if (stylistSnapshot.exists &&
+              stylistSnapshot['status'] == 'approved') {
+            // Stylist account is approved, allow login
+            Get.offAll(
+                () => AdminHomeScreen()); // Navigate to your desired screen
+            VxToast.show(context, msg: "Login Successful");
+            return;
+          } else if (acceptedStylistSnapshot.exists &&
+              acceptedStylistSnapshot['status'] == 'approved') {
+            // Accepted Stylist account is approved, allow login
+            Get.offAll(
+                () => AdminHomeScreen()); // Navigate to your desired screen
+            VxToast.show(context, msg: "Login Successful");
+            return;
           } else {
-            print('Accepted stylist document not found for UID: $uid');
-            VxToast.show(context, msg: "Account not found");
+            VxToast.show(context, msg: "Your account is pending approval");
           }
         } else {
-          VxToast.show(context, msg: "Login Failed");
+          VxToast.show(context, msg: "Account not found");
         }
       } catch (e) {
         isLoading(false);
@@ -72,8 +61,8 @@ class LoginController extends GetxController {
     }
   }
 
-  //validate email and password
-  String? validateemail(value) {
+  // Validate email
+  String? validateemail(String? value) {
     if (value!.isEmpty) {
       return 'Please enter an email';
     }
@@ -84,14 +73,22 @@ class LoginController extends GetxController {
     return null;
   }
 
-  String? validpass(value) {
+  // Validate password
+  String? validpass(String? value) {
     if (value!.isEmpty) {
       return 'Please enter a password';
     }
-    RegExp emailRefExp = RegExp(r'^.{8,}$');
-    if (!emailRefExp.hasMatch(value)) {
+    if (value.length < 8) {
       return 'Password must contain at least 8 characters';
     }
     return null;
+  }
+
+  @override
+  void dispose() {
+    // Clean up controllers when not needed
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

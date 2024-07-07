@@ -32,7 +32,7 @@ dependencies:
   firebase_storage: ^11.6.6
   shared_preferences: ^2.2.2
   google_sign_in: ^6.2.1
-  image_picker: ^1.0.7
+  image_picker: ^1.1.2
   fluttertoast: ^8.2.4
   geocoding: ^3.0.0
   geolocator: ^11.0.0

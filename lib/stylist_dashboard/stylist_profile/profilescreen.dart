@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:salonbookingapp/Utils/app_style.dart';
-import 'package:salonbookingapp/general/consts/consts.dart';
 import 'package:salonbookingapp/stylist_dashboard/auth/controller/signup_controller.dart';
 
-import '../widgets/custom_new.dart';
+import 'editprofilescreen.dart';
 
 class StylistProfileScreen extends StatelessWidget {
   final SignupController controller = Get.put(SignupController());
@@ -14,15 +17,14 @@ class StylistProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
-        title: "Profile".text.make(),
+        title: Text("Profile"),
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () async {
               await controller.signout();
-              Get.offAllNamed(
-                  '/login'); // Navigate to login screen after signout
+              Get.offAllNamed('/login');
             },
           ),
         ],
@@ -31,22 +33,16 @@ class StylistProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder<DocumentSnapshot>(
           future: FirebaseFirestore.instance
-              .collection('pendingStylists')
+              .collection('acceptedStylists')
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .get(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
+              return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || !snapshot.data!.exists) {
-              return Center(
-                child: "No profile data found".text.make(),
-              );
+              return Center(child: Text("No profile data found"));
             } else {
               var data = snapshot.data!.data() as Map<String, dynamic>;
               controller.nameController.text = data['stylistName'] ?? '';
@@ -58,109 +54,67 @@ class StylistProfileScreen extends StatelessWidget {
               controller.basePriceController.text = data['stylistAbout'] ?? '';
               controller.addressController.text = data['stylistAddress'] ?? '';
               controller.serviceController.text = data['stylistService'] ?? '';
+              controller.profilePictureUrl.value = data['profilePicture'] ?? '';
 
-              return Form(
-                key: controller.formkey,
-                child: ListView(
+              return Obx(() {
+                return Column(
                   children: [
-                    CoustomTextField(
-                      controller: controller.nameController,
-                      hint: 'Name',
-                      label: 'Name',
-                      validator: controller.validname,
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.phoneController,
-                      hint: 'Phone',
-                      label: 'Phone',
-                      validator: controller.validfield,
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.emailController,
-                      hint: 'Email',
-                      label: 'Email',
-                      validator: controller.validateemail,
-                      readOnly: true, // Email should be read-only
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.categoryController,
-                      hint: 'Category',
-                      label: 'Category',
-                      validator: controller.validfield,
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.timeController,
-                      hint: 'Available Timing',
-                      label: 'Available Timing',
-                      validator: controller.validfield,
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.basePriceController,
-                      hint: 'Base Price',
-                      label: 'Base Price',
-                      validator: controller.validfield,
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.addressController,
-                      hint: 'Address',
-                      label: 'Address',
-                      validator: controller.validfield,
-                    ),
-                    10.heightBox,
-                    CoustomTextField(
-                      controller: controller.serviceController,
-                      hint: 'Home Service (Yes/No)',
-                      label: 'Home Service (Yes/No)',
-                      validator: controller.validfield,
-                    ),
-                    20.heightBox,
-                    Obx(() {
-                      return controller.isLoading.value
-                          ? const CircularProgressIndicator().centered()
-                          : ElevatedButton(
-                              onPressed: () async {
-                                if (controller.formkey.currentState!
-                                    .validate()) {
-                                  controller.isLoading(true);
-                                  await FirebaseFirestore.instance
-                                      .collection('pendingStylists')
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .update({
-                                    'stylistName':
-                                        controller.nameController.text,
-                                    'stylistPhone':
-                                        controller.phoneController.text,
-                                    'stylistCategory':
-                                        controller.categoryController.text,
-                                    'stylistTiming':
-                                        controller.timeController.text,
-                                    'stylistAbout':
-                                        controller.basePriceController.text,
-                                    'stylistAddress':
-                                        controller.addressController.text,
-                                    'stylistService':
-                                        controller.serviceController.text,
-                                  });
-                                  controller.isLoading(false);
-                                  VxToast.show(context,
-                                      msg: "Profile updated successfully");
-                                }
-                              },
-                              child: "Update Profile".text.make(),
-                            );
-                    }),
+                    _buildProfileView(context, data),
+                    const SizedBox(height: 20),
+                    if (!controller.isEditing.value)
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.to(() => StylistEditProfileScreen());
+                        },
+                        child: const Text("Edit Profile"),
+                      ),
                   ],
-                ),
-              );
+                );
+              });
             }
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileView(BuildContext context, Map<String, dynamic> data) {
+    return Column(
+      children: [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: NetworkImage(controller.profilePictureUrl.value),
+        ),
+        const SizedBox(height: 20),
+        _buildProfileField(
+          controller: controller.nameController,
+          label: 'Name',
+          readOnly: true,
+        ),
+        _buildProfileField(
+          controller: controller.categoryController,
+          label: 'Category',
+          readOnly: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProfileField({
+    required TextEditingController controller,
+    required String label,
+    bool readOnly = false,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: TextFormField(
+        controller: controller,
+        readOnly: readOnly,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
         ),
       ),
     );
