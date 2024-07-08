@@ -1,3 +1,4 @@
+import 'package:salonbookingapp/stylist_dashboard/auth/view/resetpas.dart';
 import 'package:salonbookingapp/stylist_dashboard/auth/view/signup_page.dart';
 
 import '../../general/consts/consts.dart';
@@ -56,7 +57,11 @@ class LoginVieww extends StatelessWidget {
                       20.heightBox,
                       Align(
                         alignment: Alignment.centerRight,
-                        child: "Forget Password ?".text.make(),
+                        child: InkWell(
+                            onTap: () {
+                              Get.to(() => const StylistPasswordResetPage());
+                            },
+                            child: "Forget Password ?".text.make()),
                       ),
                       20.heightBox,
                       SizedBox(

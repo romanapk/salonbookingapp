@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../Utils/app_style.dart';
 import '../customer_dashboard/category/view/category_view.dart';
 import '../customer_dashboard/customer_drawer/drawer.dart';
+import '../customer_dashboard/nearbystylistsscreen.dart';
 import 'image_slider.dart';
 
 class FirstScreen extends StatelessWidget {
@@ -63,14 +64,28 @@ class FirstScreen extends StatelessWidget {
             ],
           ),
           Positioned(
+            bottom: 90,
+            right: 20,
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NearbyStylistsPage()),
+                );
+              },
+              child: const Icon(Icons.location_pin),
+              backgroundColor: Styles.orangeColor,
+            ),
+          ),
+          Positioned(
             bottom: 20,
             right: 20,
             child: FloatingActionButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const DialogeChat()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NearbyStylistsPage()),
+                );
               },
               child: const Icon(Icons.chat_bubble),
               backgroundColor: Styles.orangeColor,

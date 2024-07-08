@@ -163,15 +163,17 @@ class SignupView extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.location_on),
                           onPressed: () async {
-                            LatLng? location = await Navigator.push(
+                            var result = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => AddressPickerMap(),
                               ),
                             );
-                            if (location != null) {
-                              controller.addressController.text =
-                                  '${location.latitude}, ${location.longitude}';
+                            if (result != null) {
+                              LatLng location = result['location'];
+                              String address = result['address'];
+                              controller.addressController.text = address;
+                              print('Address updated to: $address');
                             }
                           },
                         ),
@@ -197,6 +199,14 @@ class SignupView extends StatelessWidget {
                       validator: controller.validfield,
                     ),
                     const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        controller.pickCertificateImage();
+                      },
+                      icon: const Icon(Icons.file_upload),
+                      label: const Text('Upload Professional Certificate'),
+                    ),
+                    const SizedBox(height: 15),
                     SizedBox(
                       width: context.screenWidth * .7,
                       height: 44,

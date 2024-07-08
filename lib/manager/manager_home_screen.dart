@@ -158,6 +158,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
         title: Text(stylist['stylistName']),
         content: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Email: ${stylist['stylistEmail']}'),
             Text('Phone: ${stylist['stylistPhone']}'),
@@ -166,6 +167,26 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
             Text('Service: ${stylist['stylistService']}'),
             Text('Base Price: ${stylist['stylistAbout']}'),
             Text('Timing: ${stylist['stylistTiming']}'),
+            if (stylist.containsKey('certificateUrl'))
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CertificateViewScreen(
+                          imageUrl: stylist['certificateUrl']),
+                    ),
+                  );
+                  // Navigate or show a larger view of the certificate image
+                  // Example: Navigator.push(...);
+                },
+                child: Image.network(
+                  stylist['certificateUrl'],
+                  width: 200, // Adjust size as needed
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+              ),
           ],
         ),
       ),
@@ -281,5 +302,26 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
         // Handle errors
       }
     }
+  }
+}
+
+class CertificateViewScreen extends StatelessWidget {
+  final String imageUrl;
+
+  CertificateViewScreen({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Certificate'),
+      ),
+      body: Center(
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.contain, // Adjust the fit as needed
+        ),
+      ),
+    );
   }
 }

@@ -24,6 +24,7 @@ class SignupController extends GetxController {
   var isPasswordVisible = false.obs;
   var isEditing = false.obs;
   var profilePictureUrl = ''.obs;
+  var certificateImageUrl = ''.obs;
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   RxString selectedValue = "Facial".obs;
@@ -54,6 +55,36 @@ class SignupController extends GetxController {
         categoryController.text = value;
       }
     });
+  }
+
+  Future<void> pickCertificateImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      await uploadCertificateImage(File(image.path));
+    }
+  }
+
+  Future<void> uploadCertificateImage(File imageFile) async {
+    try {
+      isLoading(true);
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('certificates/$userId');
+      UploadTask uploadTask = storageReference.putFile(imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      certificateImageUrl.value = await taskSnapshot.ref.getDownloadURL();
+      await FirebaseFirestore.instance
+          .collection('acceptedStylists')
+          .doc(userId)
+          .update({'certificateUrl': certificateImageUrl.value});
+      Get.snackbar('Success', 'Certificate uploaded successfully');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to upload certificate');
+    } finally {
+      isLoading(false);
+    }
   }
 
   Future<void> signupUser(BuildContext context) async {

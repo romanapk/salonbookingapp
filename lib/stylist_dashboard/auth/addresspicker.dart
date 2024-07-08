@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 
@@ -9,6 +10,23 @@ class AddressPickerMap extends StatefulWidget {
 
 class _AddressPickerMapState extends State<AddressPickerMap> {
   LatLng? _selectedLocation;
+  String _address = '';
+
+  Future<void> _getAddressFromLatLng(LatLng latLng) async {
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+      if (placemarks.isNotEmpty) {
+        Placemark placemark = placemarks.first;
+        setState(() {
+          _address =
+              '${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.country}';
+        });
+      }
+    } catch (e) {
+      print('Error in converting latLng to address: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +44,16 @@ class _AddressPickerMapState extends State<AddressPickerMap> {
             trackMyPosition: true,
             searchBarBackgroundColor: Colors.white,
             onPicked: (pickedData) {
+              LatLng latLng = LatLng(
+                  pickedData.latLong.latitude, pickedData.latLong.longitude);
               setState(() {
-                _selectedLocation = pickedData.latLong as LatLng?;
+                _selectedLocation = latLng;
+              });
+              _getAddressFromLatLng(latLng).then((_) {
+                if (_address.isNotEmpty) {
+                  Navigator.pop(context,
+                      {'location': _selectedLocation, 'address': _address});
+                }
               });
             },
           ),
@@ -37,8 +63,13 @@ class _AddressPickerMapState extends State<AddressPickerMap> {
             child: FloatingActionButton(
               child: const Icon(Icons.check),
               onPressed: () {
-                if (_selectedLocation != null) {
-                  Navigator.pop(context, _selectedLocation);
+                if (_selectedLocation != null && _address.isNotEmpty) {
+                  Navigator.pop(context,
+                      {'location': _selectedLocation, 'address': _address});
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please select a location')),
+                  );
                 }
               },
             ),
