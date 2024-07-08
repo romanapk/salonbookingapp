@@ -1,5 +1,7 @@
+import 'package:latlong2/latlong.dart';
 import 'package:salonbookingapp/stylist_dashboard/auth/view/message.dart';
 
+import '../../../front_screens/address picker.dart';
 import '../../general/consts/consts.dart';
 import '../../widgets/coustom_textfield.dart';
 import '../controller/signup_controller.dart';
@@ -151,8 +153,27 @@ class SignupView extends StatelessWidget {
                     CoustomTextField(
                       textcontroller: controller.addressController,
                       icon: const Icon(Icons.home_rounded),
-                      hint: "write your address",
+                      hint: "Write your address",
                       validator: controller.validfield,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        LatLng? selectedLocation = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddressPickerMap(
+                                onLocationSelected: (LatLng location) {
+                              controller.addressController.text =
+                                  '${location.latitude}, ${location.longitude}';
+                            }),
+                          ),
+                        );
+                        if (selectedLocation != null) {
+                          controller.addressController.text =
+                              '${selectedLocation.latitude}, ${selectedLocation.longitude}';
+                        }
+                      },
+                      child: Text("Select Address on Map"),
                     ),
                     const SizedBox(height: 15),
                     DropdownButtonFormField<String>(

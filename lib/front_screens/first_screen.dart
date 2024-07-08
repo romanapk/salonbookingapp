@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../Utils/app_style.dart';
-import '../chatbot/message_dart.dart';
 import '../customer_dashboard/category/view/category_view.dart';
 import '../customer_dashboard/customer_drawer/drawer.dart';
 import 'image_slider.dart';
+import 'nearby.dart';
 
 class FirstScreen extends StatelessWidget {
   const FirstScreen({Key? key}) : super(key: key);
@@ -66,15 +67,13 @@ class FirstScreen extends StatelessWidget {
           Positioned(
             bottom: 20,
             right: 20,
-            child: FloatingActionButton(
+            child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DialogeChat()),
-                );
+                Get.to(NearbyStylistsView());
               },
-              child: const Icon(Icons.chat_bubble),
-              backgroundColor: Styles.orangeColor,
+              child: Text("Find Nearby Stylists"),
+              // child: const Icon(Icons.chat_bubble),
+              // backgroundColor: Styles.orangeColor,
             ),
           ),
         ],
