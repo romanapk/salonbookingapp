@@ -17,15 +17,6 @@ class StylistEditProfileScreen extends StatelessWidget {
         backgroundColor: Styles.bgColor,
         title: Text("Edit Profile"),
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await controller.signout();
-              Get.offAllNamed('/login');
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

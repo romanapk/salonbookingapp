@@ -23,7 +23,10 @@ class BookAppointmentView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
-        title: docName.text.make(),
+        title: Text(
+          docName,
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

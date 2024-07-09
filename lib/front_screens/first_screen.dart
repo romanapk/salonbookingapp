@@ -82,10 +82,10 @@ class FirstScreen extends StatelessWidget {
             right: 20,
             child: FloatingActionButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NearbyStylistsPage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => NearbyStylistsPage()),
+                // );
               },
               child: const Icon(Icons.chat_bubble),
               backgroundColor: Styles.orangeColor,

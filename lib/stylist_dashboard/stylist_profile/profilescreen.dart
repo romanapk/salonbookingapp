@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:salonbookingapp/Utils/app_style.dart';
 import 'package:salonbookingapp/stylist_dashboard/auth/controller/signup_controller.dart';
 
 import 'editprofilescreen.dart';
@@ -16,19 +15,19 @@ class StylistProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Styles.bgColor,
-        title: Text("Profile"),
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await controller.signout();
-              Get.offAllNamed('/login');
-            },
+          // backgroundColor: Styles.bgColor,
+          // title: Text("Profile"),
+          // elevation: 0,
+          // actions: [
+          //   IconButton(
+          //     icon: const Icon(Icons.logout),
+          //     onPressed: () async {
+          //       await controller.signout();
+          //       Get.offAllNamed('/login');
+          //     },
+          //   ),
+          // ],
           ),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder<DocumentSnapshot>(

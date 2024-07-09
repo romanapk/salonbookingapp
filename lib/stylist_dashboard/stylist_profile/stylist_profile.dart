@@ -59,7 +59,7 @@ class StylistProfile extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    "See All reviews".text.color(AppColors.primeryColor).make()
+                    //     "See All reviews".text.color(AppColors.primeryColor).make()
                   ],
                 ),
               ),

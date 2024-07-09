@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salonbookingapp/splash_screen/splashscreen.dart';
 import 'package:salonbookingapp/stylist_dashboard/general/consts/colors.dart';
+import 'package:salonbookingapp/stylist_dashboard/notifications/stylist_notifications.dart';
 
 import '../stylist_profile/profilescreen.dart';
 
@@ -62,6 +63,13 @@ class StylistDrawer extends StatelessWidget {
             title: Text('Profile'),
             onTap: () {
               Get.to(() => StylistProfileScreen());
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.notifications),
+            title: Text('Notifications'),
+            onTap: () {
+              Get.to(() => StylistNotificationsPage());
             },
           ),
           ListTile(

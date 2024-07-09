@@ -14,7 +14,10 @@ class DoctorProfile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Styles.bgColor,
-        title: "Stylist's details".text.make(),
+        title: Text(
+          "Stylist's details",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -69,7 +72,7 @@ class DoctorProfile extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    "See All reviews".text.color(AppColors.primeryColor).make()
+                    //     "See All reviews".text.color(AppColors.primeryColor).make()
                   ],
                 ),
               ),
