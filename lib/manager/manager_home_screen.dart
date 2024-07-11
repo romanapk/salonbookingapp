@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:salonbookingapp/manager/removeacceptedstylist.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'managerdrawer.dart';
+
 class ManagerHomeScreen extends StatefulWidget {
   @override
   _ManagerHomeScreenState createState() => _ManagerHomeScreenState();
@@ -31,6 +33,7 @@ class _ManagerHomeScreenState extends State<ManagerHomeScreen> {
             ],
           ),
         ),
+        drawer: StylistDrawer(),
         body: IndexedStack(
           index: selectedIndex,
           children: [
